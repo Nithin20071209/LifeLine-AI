@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Aid | LifeLine AI</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+🚑 LifeLine AI
+</div>
+
+<button class="menu-btn" onclick="window.location='/'">
+<i class="fa-solid fa-house"></i>
+Home
+</button>
+
+<button class="menu-btn">
+<i class="fa-solid fa-kit-medical"></i>
+First Aid
+</button>
+
+<button class="menu-btn" onclick="window.location='/healthtips'">
+<i class="fa-solid fa-heart-pulse"></i>
+Health Tips
+</button>
+
+<button class="menu-btn" onclick="window.location='/hospitals'">
+<i class="fa-solid fa-hospital"></i>
+Hospitals
+</button>
+
+<button class="menu-btn" onclick="window.location='/about'">
+<i class="fa-solid fa-circle-info"></i>
+About
+</button>
+
+<button class="menu-btn sos">
+🚨 SOS
+</button>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>🩹 First Aid Guide</h1>
+
+<div class="profile">
+❤️ Stay Safe
+</div>
+
+</div>
+
+<div class="health-grid">
+
+<div class="card">
+<h2>🤕 Head Injury</h2>
+
+<p>
+• Stay calm<br>
+• Apply a cold pack<br>
+• Watch for dizziness or vomiting<br>
+• Visit a doctor if symptoms worsen
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🔥 Burns</h2>
+
+<p>
+• Cool under running water for 20 minutes<br>
+• Do not apply toothpaste or ice<br>
+• Cover with a clean cloth
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🩸 Bleeding</h2>
+
+<p>
+• Apply direct pressure<br>
+• Raise injured area if possible<br>
+• Use a clean bandage
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🐍 Snake Bite</h2>
+
+<p>
+• Keep patient calm<br>
+• Don't cut the wound<br>
+• Don't suck the venom<br>
+• Go to hospital immediately
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>❤️ CPR</h2>
+
+<p>
+• Call emergency services<br>
+• Push hard and fast in the center of chest<br>
+• About 100–120 compressions per minute
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🦴 Fracture</h2>
+
+<p>
+• Don't move injured part<br>
+• Use a splint if possible<br>
+• Seek medical care immediately
+</p>
+
+</div>
+
+</div>
+
+<div class="welcome-card">
+
+<h2>⚠ Emergency Notice</h2>
+
+<p>
+
+LifeLine AI provides first-aid guidance only.
+
+Always contact emergency medical services for serious injuries.
+
+</p>
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

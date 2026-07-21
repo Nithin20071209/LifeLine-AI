@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLine AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<a href="tel:108">
+    <button>🚑 Call 108</button>
+</a>
+<div class="sidebar">
+
+    <div class="logo">
+        🚑 LifeLine AI
+    </div>
+
+    <button class="menu-btn" onclick="window.location='/'">
+    <i class="fa-solid fa-house"></i>
+    Home
+</button>
+
+<button class="menu-btn" onclick="window.location='/firstaid'">
+    <i class="fa-solid fa-kit-medical"></i>
+    First Aid
+</button>
+
+<button class="menu-btn" onclick="window.location='/healthtips'">
+    <i class="fa-solid fa-heart-pulse"></i>
+    Health Tips
+</button>
+
+<button class="menu-btn" onclick="window.location='/hospitals'">
+    <i class="fa-solid fa-location-dot"></i>
+    Hospitals
+</button>
+
+<button class="menu-btn" onclick="window.location='/about'">
+    <i class="fa-solid fa-circle-info"></i>
+    About
+</button>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+    <!-- Top Bar -->
+
+    <div class="topbar">
+
+        <div>
+            <h1>🤖 LifeLine AI</h1>
+            <p>Your Smart Emergency Healthcare Assistant</p>
+        </div>
+
+        <div class="profile">
+            ❤️ Stay Safe
+        </div>
+
+    </div>
+
+    <!-- Welcome -->
+
+    <div class="welcome-card">
+    <h2>🩹 First Aid Guide</h2>
+    <p>Emergency first aid instructions for common situations.</p>
+</div>
+
+<div class="health-grid">
+
+    <div class="card">
+        <h3>🔥 Burns</h3>
+        <p>Cool with running water for 20 minutes.</p>
+    </div>
+
+    <div class="card">
+        <h3>🩸 Bleeding</h3>
+        <p>Apply pressure using a clean cloth.</p>
+    </div>
+
+    <div class="card">
+        <h3>🐍 Snake Bite</h3>
+        <p>Keep the patient calm and call 108 immediately.</p>
+    </div>
+
+    <div class="card">
+        <h3>❤️ CPR</h3>
+        <p>Start chest compressions until help arrives.</p>
+    </div>
+
+</div>
+
+    <!-- Health Cards -->
+
+    <div class="health-grid">
+
+        <div class="card">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h3>Emergency Care</h3>
+            <p>Get immediate first aid guidance.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-user-doctor"></i>
+            <h3>AI Assistant</h3>
+            <p>Ask health questions anytime.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-hospital"></i>
+            <h3>Hospital Finder</h3>
+            <p>Find hospitals near you.</p>
+        </div>
+
+  <div class="chat-box">
+
+    {% if messages|length <= 1 %}
+
+    <div class="ai-message">
+        👋 Hello! Ask me any medical or first-aid question.
+    </div>
+
+    {% endif %}
+
+    {% for message in messages %}
+
+        {% if message.role == "user" %}
+
+        <div class="user-message">
+            👤 {{ message.content }}
+        </div>
+
+        {% elif message.role == "assistant" %}
+
+        <div class="ai-message">
+            🤖 {{ message.content }}
+        </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+    <!-- Input Form -->
+
+    <form method="POST">
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                name="question"
+                placeholder="Type your health question..."
+                required>
+
+            <button type="submit">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Tools -->
+
+    <div class="bottom-tools">
+
+        <button type="button" class="voice-btn">
+            🎤 Voice
+        </button>
+
+        <button
+            type="button"
+            onclick="document.getElementById('imageInput').click()">
+
+            📷 Upload Image
+
+        </button>
+
+        <input type="file" id="imageInput" hidden>
+
+        <button type="button" class="hospital-btn">
+            📍 Nearby Hospitals
+        </button>
+
+    </div>
+
+    <!-- Emergency Banner -->
+
+    <div class="emergency-banner">
+
+        <h2>🚨 Emergency?</h2>
+
+        <p>
+            Call ambulance services immediately and follow first-aid instructions.
+        </p>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

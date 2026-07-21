@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLine AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="welcome-card">
+    <h2>💚 Health Tips</h2>
+    <p>Follow these simple daily habits to stay healthy and active.</p>
+</div>
+
+<div class="health-grid">
+
+    <div class="card">
+        <h3>🥗 Healthy Diet</h3>
+        <p>Eat fruits, vegetables and balanced meals every day.</p>
+    </div>
+
+    <div class="card">
+        <h3>💧 Drink Water</h3>
+        <p>Drink 2–3 liters of water daily to stay hydrated.</p>
+    </div>
+
+    <div class="card">
+        <h3>🏃 Exercise</h3>
+        <p>Exercise or walk for at least 30 minutes every day.</p>
+    </div>
+
+    <div class="card">
+        <h3>😴 Good Sleep</h3>
+        <p>Sleep 7–8 hours every night for better health.</p>
+    </div>
+
+    <div class="card">
+        <h3>🧼 Hygiene</h3>
+        <p>Wash your hands regularly and maintain personal hygiene.</p>
+    </div>
+
+    <div class="card">
+        <h3>🩺 Regular Checkups</h3>
+        <p>Visit a doctor regularly for preventive health checkups.</p>
+    </div>
+
+</div>  
+
+<!-- Sidebar -->
+<a href="tel:108">
+    <button>🚑 Call 108</button>
+</a>
+<div class="sidebar">
+
+    <div class="logo">
+        🚑 LifeLine AI
+    </div>
+
+    <button class="menu-btn" onclick="window.location='/'">
+    <i class="fa-solid fa-house"></i>
+    Home
+</button>
+
+<button class="menu-btn" onclick="window.location='/firstaid'">
+    <i class="fa-solid fa-kit-medical"></i>
+    First Aid
+</button>
+
+<button class="menu-btn" onclick="window.location='/healthtips'">
+    <i class="fa-solid fa-heart-pulse"></i>
+    Health Tips
+</button>
+
+<button class="menu-btn" onclick="window.location='/hospitals'">
+    <i class="fa-solid fa-location-dot"></i>
+    Hospitals
+</button>
+
+<button class="menu-btn" onclick="window.location='/about'">
+    <i class="fa-solid fa-circle-info"></i>
+    About
+</button>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+    <!-- Top Bar -->
+
+    <div class="topbar">
+
+        <div>
+            <h1>🤖 LifeLine AI</h1>
+            <p>Your Smart Emergency Healthcare Assistant</p>
+        </div>
+
+        <div class="profile">
+            ❤️ Stay Safe
+        </div>
+
+    </div>
+
+    <!-- Welcome -->
+
+    <div class="welcome-card">
+    <h2>🩹 First Aid Guide</h2>
+    <p>Emergency first aid instructions for common situations.</p>
+</div>
+
+<div class="health-grid">
+
+    <div class="card">
+        <h3>🔥 Burns</h3>
+        <p>Cool with running water for 20 minutes.</p>
+    </div>
+
+    <div class="card">
+        <h3>🩸 Bleeding</h3>
+        <p>Apply pressure using a clean cloth.</p>
+    </div>
+
+    <div class="card">
+        <h3>🐍 Snake Bite</h3>
+        <p>Keep the patient calm and call 108 immediately.</p>
+    </div>
+
+    <div class="card">
+        <h3>❤️ CPR</h3>
+        <p>Start chest compressions until help arrives.</p>
+    </div>
+
+</div>
+
+    <!-- Health Cards -->
+
+    <div class="health-grid">
+
+        <div class="card">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h3>Emergency Care</h3>
+            <p>Get immediate first aid guidance.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-user-doctor"></i>
+            <h3>AI Assistant</h3>
+            <p>Ask health questions anytime.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-hospital"></i>
+            <h3>Hospital Finder</h3>
+            <p>Find hospitals near you.</p>
+        </div>
+
+  
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

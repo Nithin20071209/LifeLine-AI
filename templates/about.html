@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLine AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+<h2>ℹ️ About LifeLine AI</h2>
+
+<p>
+LifeLine AI is an AI-powered healthcare assistant that provides instant first-aid guidance, health tips, AI medical assistance, and nearby hospital information.
+</p>
+<!-- Sidebar -->
+<a href="tel:108">
+    <button>🚑 Call 108</button>
+</a>
+<div class="sidebar">
+
+    <div class="logo">
+        🚑 LifeLine AI
+    </div>
+
+    <button class="menu-btn" onclick="window.location='/'">
+    <i class="fa-solid fa-house"></i>
+    Home
+</button>
+
+<button class="menu-btn" onclick="window.location='/firstaid'">
+    <i class="fa-solid fa-kit-medical"></i>
+    First Aid
+</button>
+
+<button class="menu-btn" onclick="window.location='/healthtips'">
+    <i class="fa-solid fa-heart-pulse"></i>
+    Health Tips
+</button>
+
+<button class="menu-btn" onclick="window.location='/hospitals'">
+    <i class="fa-solid fa-location-dot"></i>
+    Hospitals
+</button>
+
+<button class="menu-btn" onclick="window.location='/about'">
+    <i class="fa-solid fa-circle-info"></i>
+    About
+</button>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+    <!-- Top Bar -->
+
+    <div class="topbar">
+
+        <div>
+            <h1>🤖 LifeLine AI</h1>
+            <p>Your Smart Emergency Healthcare Assistant</p>
+        </div>
+
+        <div class="profile">
+            ❤️ Stay Safe
+        </div>
+
+    </div>
+
+    <!-- Welcome -->
+
+    <div class="welcome-card">
+    <h2>🩹 First Aid Guide</h2>
+    <p>Emergency first aid instructions for common situations.</p>
+</div>
+
+<div class="health-grid">
+
+    <div class="card">
+        <i class="fa-solid fa-bullseye"></i>
+        <h3>Our Mission</h3>
+        <p>Provide quick and reliable healthcare guidance using Artificial Intelligence.</p>
+    </div>
+
+    <div class="card">
+        <i class="fa-solid fa-code"></i>
+        <h3>Technologies Used</h3>
+        <p>Python, Flask, HTML, CSS, JavaScript, Groq AI.</p>
+    </div>
+
+    <div class="card">
+        <i class="fa-solid fa-users"></i>
+        <h3>Our Goal</h3>
+        <p>Help people receive emergency guidance before reaching professional medical care.</p>
+    </div>
+
+</div>
+
+    <!-- Health Cards -->
+
+    <div class="health-grid">
+
+        <div class="card">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h3>Emergency Care</h3>
+            <p>Get immediate first aid guidance.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-user-doctor"></i>
+            <h3>AI Assistant</h3>
+            <p>Ask health questions anytime.</p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-hospital"></i>
+            <h3>Hospital Finder</h3>
+            <p>Find hospitals near you.</p>
+        </div>
+
+ 
+
+    <!-- Input Form -->
+
+   
+
+    <!-- Tools -->
+
+
+   
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
