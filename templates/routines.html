@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Routines | LifeLine AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        :root {
+            --bg: #030712;
+            --panel: rgba(10, 24, 45, 0.88);
+            --panel-2: rgba(15, 32, 57, 0.82);
+            --border: rgba(96, 165, 250, 0.16);
+            --blue: #60a5fa;
+            --cyan: #22d3ee;
+            --green: #34d399;
+            --red: #f87171;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(59, 130, 246, 0.20),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(34, 211, 238, 0.13),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(99, 102, 241, 0.12),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617 0%,
+                    #071426 45%,
+                    #030817 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            top: 120px;
+            left: -130px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.10);
+            filter: blur(80px);
+            pointer-events: none;
+            animation: floatGlow 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            right: -150px;
+            bottom: 80px;
+            border-radius: 50%;
+            background: rgba(34, 211, 238, 0.08);
+            filter: blur(90px);
+            pointer-events: none;
+            animation: floatGlow 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatGlow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            min-height: 72px;
+            padding: 0 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            background: rgba(3, 11, 24, 0.86);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .logo {
+            flex-shrink: 0;
+            font-size: 23px;
+            font-weight: 900;
+            color: var(--blue);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            position: relative;
+
+            padding: 9px 12px;
+            border-radius: 10px;
+
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: #dbeafe;
+            background: rgba(59, 130, 246, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            color: var(--blue);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 18%;
+            right: 18%;
+            bottom: 3px;
+            height: 2px;
+            border-radius: 10px;
+            background: linear-gradient(
+                90deg,
+                var(--blue),
+                var(--cyan)
+            );
+        }
+
+        .logout {
+            border: 1px solid rgba(248, 113, 113, 0.25);
+            color: #f87171 !important;
+        }
+
+        .logout:hover {
+            background: rgba(248, 113, 113, 0.08) !important;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            position: relative;
+            z-index: 1;
+
+            width: min(1100px, 90%);
+            margin: auto;
+            padding: 42px 0 70px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px 36px;
+
+            animation: fadeUp 0.65s ease both;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 15px;
+
+            border-radius: 999px;
+
+            background: rgba(34, 211, 238, 0.07);
+            border: 1px solid rgba(34, 211, 238, 0.18);
+
+            color: var(--cyan);
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin-top: 17px;
+
+            font-size: clamp(30px, 5vw, 42px);
+            line-height: 1.15;
+            letter-spacing: -1px;
+
+            background: linear-gradient(
+                135deg,
+                #ffffff,
+                #bfdbfe,
+                #67e8f9
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 14px auto 0;
+
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* ================= PANEL ================= */
+
+        .panel {
+            position: relative;
+
+            margin-bottom: 24px;
+            padding: 28px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 31, 55, 0.92),
+                    rgba(6, 19, 36, 0.94)
+                );
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 22px 55px rgba(0, 0, 0, 0.24),
+                inset 0 1px 0 rgba(255,255,255,0.025);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            animation: fadeUp 0.65s ease both;
+        }
+
+        .panel:nth-of-type(2) {
+            animation-delay: 0.08s;
+        }
+
+        .panel:nth-of-type(3) {
+            animation-delay: 0.14s;
+        }
+
+        .panel:nth-of-type(4) {
+            animation-delay: 0.20s;
+        }
+
+        .panel h2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+            font-size: 20px;
+            color: #f8fafc;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-height: 46px;
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(96, 165, 250, 0.15);
+
+            background: rgba(2, 8, 23, 0.70);
+
+            color: #f8fafc;
+            outline: none;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:hover,
+        select:hover {
+            background: rgba(3, 11, 28, 0.82);
+            border-color: rgba(96, 165, 250, 0.25);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 3px rgba(59, 130, 246, 0.10),
+                0 8px 25px rgba(37, 99, 235, 0.08);
+        }
+
+        select option {
+            background: #071426;
+            color: white;
+        }
+
+        .save-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 21px;
+
+            min-height: 46px;
+            padding: 12px 22px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #2563eb
+                );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.08);
+
+            box-shadow:
+                0 13px 30px rgba(37, 99, 235, 0.28);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ================= ROUTINE GRID ================= */
+
+        .routine-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .routine-card {
+            position: relative;
+
+            padding: 22px;
+
+            min-height: 205px;
+
+            display: flex;
+            flex-direction: column;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 32, 57, 0.88),
+                    rgba(7, 20, 38, 0.88)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.13);
+
+            transition:
+                transform 0.28s ease,
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
+        }
+
+        .routine-card::before {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            top: 18px;
+            bottom: 18px;
+
+            width: 3px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--blue),
+                    var(--cyan)
+                );
+
+            opacity: 0.8;
+        }
+
+        .routine-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(96, 165, 250, 0.32);
+
+            box-shadow:
+                0 18px 38px rgba(0, 0, 0, 0.25),
+                0 0 25px rgba(37, 99, 235, 0.07);
+        }
+
+        .category {
+            align-self: flex-start;
+
+            display: inline-flex;
+
+            padding: 5px 10px;
+
+            border-radius: 999px;
+
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.12);
+
+            color: var(--cyan);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+        }
+
+        .routine-card h3 {
+            color: #f8fafc;
+            font-size: 17px;
+            line-height: 1.4;
+
+            margin-bottom: 13px;
+        }
+
+        .routine-info {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .routine-info br + * {
+            margin-top: 2px;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+            padding: 42px 20px;
+            color: var(--muted);
+        }
+
+        .empty-icon {
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 14px;
+
+            border-radius: 20px;
+
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(96, 165, 250, 0.13);
+
+            font-size: 28px;
+        }
+
+        .empty h3 {
+            color: #e2e8f0;
+            margin-bottom: 7px;
+        }
+
+        .empty p {
+            font-size: 13px;
+        }
+
+        /* ================= SUGGESTIONS ================= */
+
+        .suggestions {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .suggestion {
+            min-height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            background:
+                rgba(59, 130, 246, 0.055);
+
+            border:
+                1px solid rgba(96, 165, 250, 0.11);
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                transform 0.22s ease,
+                background 0.22s ease,
+                border-color 0.22s ease;
+        }
+
+        .suggestion:hover {
+            transform: translateY(-3px);
+
+            background:
+                rgba(59, 130, 246, 0.10);
+
+            border-color:
+                rgba(96, 165, 250, 0.25);
+        }
+
+        /* ================= NOTICE ================= */
+
+        .notice {
+            position: relative;
+
+            padding: 23px 25px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(34, 211, 238, 0.055),
+                    rgba(59, 130, 246, 0.045)
+                );
+
+            border:
+                1px solid rgba(34, 211, 238, 0.13);
+
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .notice h3 {
+            margin-bottom: 8px;
+
+            color: var(--cyan);
+
+            font-size: 16px;
+        }
+
+        .notice p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* ================= ANIMATION ================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= ACCESSIBILITY ================= */
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid #60a5fa;
+            outline-offset: 3px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 950px) {
+            .routine-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .suggestions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .navbar {
+                padding: 0 4%;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .navbar {
+                min-height: auto;
+                padding: 14px 4%;
+
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                gap: 3px;
+            }
+
+            .nav-links a {
+                padding: 7px 8px;
+                font-size: 11px;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 25px;
+            }
+
+            .hero {
+                padding: 30px 10px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .panel {
+                padding: 21px;
+                border-radius: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .routine-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .navbar {
+                display: block;
+            }
+
+            .logo {
+                display: block;
+                margin-bottom: 12px;
+                font-size: 20px;
+            }
+
+            .nav-links {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                width: 100%;
+            }
+
+            .nav-links a {
+                text-align: center;
+                padding: 8px 4px;
+                font-size: 10px;
+            }
+
+            .nav-links a:nth-child(5) {
+                display: none;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .save-btn {
+                width: 100%;
+            }
+
+            .notice {
+                padding: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="logo"
+        >
+            LifeLine <span>AI</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('chat') }}">
+                🤖 AI Assistant
+            </a>
+
+            <a href="{{ url_for('age_mode') }}">
+                👤 Personalization
+            </a>
+
+            <a
+                href="{{ url_for('routines') }}"
+                class="active"
+            >
+                🔔 Routines
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                📜 History
+            </a>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero">
+
+            <span class="badge">
+                🔔 My Routines
+            </span>
+
+            <h1>
+                Care & Reminder Routines
+            </h1>
+
+            <p>
+                Create simple reminders for your personal
+                care activities, pets, plants and everyday tasks.
+            </p>
+
+        </section>
+
+
+        <!-- ================= ADD ROUTINE ================= -->
+
+        <section class="panel">
+
+            <h2>
+                ➕ Add New Routine
+            </h2>
+
+            <form
+                method="POST"
+                action="{{ url_for('add_routine') }}"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label for="title">
+                            Routine Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            placeholder="Example: Drink Water"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Health">
+                                💚 Health
+                            </option>
+
+                            <option value="Medicine">
+                                💊 Medicine
+                            </option>
+
+                            <option value="Pet">
+                                🐶 Pet
+                            </option>
+
+                            <option value="Plant">
+                                🌱 Plant
+                            </option>
+
+                            <option value="General">
+                                📌 General
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="repeat">
+                            Repeat
+                        </label>
+
+                        <select
+                            id="repeat"
+                            name="repeat"
+                        >
+
+                            <option value="Once">
+                                Once
+                            </option>
+
+                            <option value="Daily">
+                                Daily
+                            </option>
+
+                            <option value="Weekly">
+                                Weekly
+                            </option>
+
+                            <option value="Monthly">
+                                Monthly
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="routine_date">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="routine_date"
+                            name="routine_date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="routine_time">
+                            Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="routine_time"
+                            name="routine_time"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    🔔 Save Routine
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= SAVED ROUTINES ================= -->
+
+        <section class="panel">
+
+            <h2>
+                📋 Saved Routines
+            </h2>
+
+            {% if routines %}
+
+                <div class="routine-grid">
+
+                    {% for routine in routines %}
+
+                        <div class="routine-card">
+
+                            <span class="category">
+                                {{ routine.category }}
+                            </span>
+
+                            <h3>
+                                {{ routine.title }}
+                            </h3>
+
+                            <div class="routine-info">
+
+                                📅
+                                {{ routine.routine_date }}
+
+                                <br>
+
+                                ⏰
+                                {{ routine.routine_time }}
+
+                                <br>
+
+                                🔁
+                                {{ routine.repeat }}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🔔
+                    </div>
+
+                    <h3>
+                        No routines yet
+                    </h3>
+
+                    <p>
+                        Create your first routine using
+                        the form above.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- ================= QUICK SUGGESTIONS ================= -->
+
+        <section class="panel">
+
+            <h2>
+                💡 Quick Suggestions
+            </h2>
+
+            <div class="suggestions">
+
+                <div class="suggestion">
+                    💧 Drink Water
+                </div>
+
+                <div class="suggestion">
+                    🌱 Water Plants
+                </div>
+
+                <div class="suggestion">
+                    🐶 Check Pet Food
+                </div>
+
+                <div class="suggestion">
+                    🧹 Clean Pet Area
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NOTICE ================= -->
+
+        <section class="notice">
+
+            <h3>
+                🔔 Reminder Notice
+            </h3>
+
+            <p>
+                Browser notifications require permission.
+                Reminder checking also depends on the page
+                remaining open in your browser.
+            </p>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

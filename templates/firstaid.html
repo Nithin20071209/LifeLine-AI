@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>First Aid | LifeLine AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        /* =====================================================
+           FIRST AID PAGE
+        ===================================================== */
+
+        .firstaid-page {
+            padding-bottom: 50px;
+        }
+
+        .firstaid-intro {
+            margin-bottom: 28px;
+        }
+
+        .firstaid-intro h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .firstaid-intro p {
+            margin: 0;
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .firstaid-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .firstaid-card {
+            position: relative;
+            padding: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.055),
+                    rgba(255, 255, 255, 0.018)
+                );
+
+            overflow: hidden;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .firstaid-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 3px;
+            height: 0;
+
+            border-radius: 0 0 8px 8px;
+            background: #38bdf8;
+
+            transition: height 0.3s ease;
+        }
+
+        .firstaid-card:hover {
+            transform: translateY(-4px);
+
+            border-color: rgba(56, 189, 248, 0.28);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(56, 189, 248, 0.075),
+                    rgba(255, 255, 255, 0.02)
+                );
+
+            box-shadow:
+                0 14px 35px rgba(0, 0, 0, 0.20);
+        }
+
+        .firstaid-card:hover::before {
+            height: 100%;
+        }
+
+        .firstaid-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .firstaid-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 13px;
+
+            background: rgba(56, 189, 248, 0.10);
+            color: #38bdf8;
+
+            font-size: 19px;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .firstaid-card:hover .firstaid-icon {
+            transform: scale(1.06);
+            background: rgba(56, 189, 248, 0.16);
+        }
+
+        .firstaid-card h3 {
+            margin: 0;
+
+            font-size: 18px;
+            font-weight: 750;
+            color: var(--text);
+        }
+
+        .firstaid-card p {
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .firstaid-list {
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
+        }
+
+        .firstaid-list li {
+            position: relative;
+
+            padding-left: 22px;
+            margin: 9px 0;
+
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .firstaid-list li::before {
+            content: "\f058";
+
+            position: absolute;
+            left: 0;
+            top: 2px;
+
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+
+            color: #38bdf8;
+            font-size: 13px;
+        }
+
+        /* Emergency notice */
+
+        .firstaid-emergency {
+            margin-top: 22px;
+            padding: 20px 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            border: 1px solid rgba(248, 113, 113, 0.20);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(248, 113, 113, 0.08),
+                    rgba(255, 255, 255, 0.02)
+                );
+        }
+
+        .firstaid-emergency-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .firstaid-emergency-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background: rgba(248, 113, 113, 0.12);
+            color: #f87171;
+        }
+
+        .firstaid-emergency h3 {
+            margin: 0 0 5px;
+
+            font-size: 16px;
+            font-weight: 750;
+        }
+
+        .firstaid-emergency p {
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .emergency-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            padding: 11px 17px;
+
+            border: 0;
+            border-radius: 11px;
+
+            background: #ef4444;
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            text-decoration: none;
+            white-space: nowrap;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .emergency-button:hover {
+            transform: translateY(-2px);
+            background: #dc2626;
+
+            box-shadow:
+                0 8px 20px rgba(239, 68, 68, 0.25);
+        }
+
+        /* Page entrance animation */
+
+        .firstaid-page .topbar,
+        .firstaid-page .firstaid-intro,
+        .firstaid-page .firstaid-card,
+        .firstaid-page .firstaid-emergency {
+            animation: firstAidPageIn 0.55s ease both;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(4) {
+            animation-delay: 0.20s;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .firstaid-page .firstaid-card:nth-child(6) {
+            animation-delay: 0.30s;
+        }
+
+        @keyframes firstAidPageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+
+        @media (max-width: 850px) {
+            .firstaid-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .firstaid-emergency {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .firstaid-intro h2 {
+                font-size: 25px;
+            }
+
+            .firstaid-card {
+                padding: 20px;
+            }
+
+            .firstaid-emergency {
+                padding: 18px;
+            }
+
+            .emergency-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🚑 LifeLine AI
+        </div>
+
+        <button class="menu-btn"
+                onclick="window.location='/'">
+
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+
+        </button>
+
+        <button class="menu-btn active"
+                aria-current="page">
+
+            <i class="fa-solid fa-kit-medical"></i>
+            <span>First Aid</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/healthtips'">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>Health Tips</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/hospitals'">
+
+            <i class="fa-solid fa-hospital"></i>
+            <span>Hospitals</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/about'">
+
+            <i class="fa-solid fa-circle-info"></i>
+            <span>About</span>
+
+        </button>
+
+        <button class="menu-btn sos">
+
+            🚨
+            <span>SOS</span>
+
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main firstaid-page">
+
+        <!-- Top Bar -->
+
+        <div class="topbar">
+
+            <div>
+                <h1>🩹 First Aid Guide</h1>
+
+                <p>
+                    Simple guidance for common emergency situations.
+                </p>
+            </div>
+
+            <div class="profile">
+                ❤️ Stay Safe
+            </div>
+
+        </div>
+
+
+        <!-- Page Introduction -->
+
+        <section class="firstaid-intro">
+
+            <h2>Emergency First Aid</h2>
+
+            <p>
+                Follow these basic steps while waiting for professional
+                medical help. For serious or life-threatening situations,
+                contact emergency services immediately.
+            </p>
+
+        </section>
+
+
+        <!-- First Aid Cards -->
+
+        <section class="firstaid-grid">
+
+
+            <!-- Head Injury -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-head-side-virus"></i>
+                    </div>
+
+                    <h3>Head Injury</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Keep the person calm and still.</li>
+
+                    <li>Use a cold pack wrapped in cloth for swelling.</li>
+
+                    <li>Watch for worsening symptoms such as confusion,
+                        severe headache or vomiting.</li>
+
+                    <li>Seek medical care if symptoms become serious.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- Burns -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+
+                    <h3>Burns</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Cool the burn under cool running water.</li>
+
+                    <li>Do not apply toothpaste, butter or ice.</li>
+
+                    <li>Cover the affected area with a clean,
+                        non-stick dressing.</li>
+
+                    <li>Seek medical attention for serious burns.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- Bleeding -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+
+                    <h3>Bleeding</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Apply firm, direct pressure with a clean cloth
+                        or dressing.</li>
+
+                    <li>Keep pressure on the wound while waiting
+                        for help.</li>
+
+                    <li>Use a clean bandage once bleeding is controlled.</li>
+
+                    <li>Get emergency help for heavy or uncontrolled bleeding.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- Snake Bite -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-staff-snake"></i>
+                    </div>
+
+                    <h3>Snake Bite</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Keep the person calm and as still as possible.</li>
+
+                    <li>Get emergency medical help immediately.</li>
+
+                    <li>Do not cut the wound.</li>
+
+                    <li>Do not attempt to suck out venom.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CPR -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+
+                    <h3>CPR</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Call emergency services immediately.</li>
+
+                    <li>Begin CPR if the person is unresponsive
+                        and not breathing normally.</li>
+
+                    <li>Follow instructions from emergency responders
+                        or use an AED if available.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- Fracture -->
+
+            <article class="firstaid-card">
+
+                <div class="firstaid-card-header">
+
+                    <div class="firstaid-icon">
+                        <i class="fa-solid fa-bone"></i>
+                    </div>
+
+                    <h3>Fracture</h3>
+
+                </div>
+
+                <ul class="firstaid-list">
+
+                    <li>Keep the injured area as still as possible.</li>
+
+                    <li>Do not try to straighten the injured body part.</li>
+
+                    <li>Support the area while waiting for medical help.</li>
+
+                    <li>Seek professional medical care promptly.</li>
+
+                </ul>
+
+            </article>
+
+        </section>
+
+
+        <!-- Emergency Notice -->
+
+        <section class="firstaid-emergency">
+
+            <div class="firstaid-emergency-content">
+
+                <div class="firstaid-emergency-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div>
+
+                    <h3>Emergency Notice</h3>
+
+                    <p>
+                        LifeLine AI provides general first-aid information
+                        and does not replace doctors, nurses or emergency
+                        medical professionals.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="tel:108" class="emergency-button">
+
+                <i class="fa-solid fa-phone"></i>
+
+                Call 108
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

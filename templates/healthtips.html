@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Health Tips | LifeLine AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        /* =====================================================
+           HEALTH TIPS PAGE
+        ===================================================== */
+
+        .healthtips-page {
+            padding-bottom: 50px;
+        }
+
+        .healthtips-intro {
+            margin-bottom: 28px;
+        }
+
+        .healthtips-intro h2 {
+            margin: 0 0 8px;
+
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .healthtips-intro p {
+            margin: 0;
+            max-width: 720px;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           HEALTH GRID
+        ===================================================== */
+
+        .healthtips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .healthtip-card {
+            position: relative;
+
+            padding: 24px;
+
+            min-height: 190px;
+
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.055),
+                    rgba(255, 255, 255, 0.018)
+                );
+
+            overflow: hidden;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .healthtip-card::before {
+            content: "";
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 3px;
+            height: 0;
+
+            border-radius: 0 0 8px 8px;
+
+            background: #38bdf8;
+
+            transition: height 0.3s ease;
+        }
+
+        .healthtip-card:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(56, 189, 248, 0.28);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(56, 189, 248, 0.075),
+                    rgba(255, 255, 255, 0.02)
+                );
+
+            box-shadow:
+                0 14px 35px rgba(0, 0, 0, 0.20);
+        }
+
+        .healthtip-card:hover::before {
+            height: 100%;
+        }
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .healthtip-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 14px;
+
+            background: rgba(56, 189, 248, 0.10);
+            color: #38bdf8;
+
+            font-size: 20px;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .healthtip-card:hover .healthtip-icon {
+            transform: scale(1.07);
+
+            background: rgba(56, 189, 248, 0.16);
+        }
+
+        /* =====================================================
+           CARD TEXT
+        ===================================================== */
+
+        .healthtip-card h3 {
+            margin: 0 0 8px;
+
+            font-size: 17px;
+            font-weight: 750;
+
+            color: var(--text);
+        }
+
+        .healthtip-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           SMALL HIGHLIGHT
+        ===================================================== */
+
+        .healthtip-label {
+            display: inline-flex;
+            align-items: center;
+
+            margin-top: 15px;
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(56, 189, 248, 0.08);
+
+            color: #7dd3fc;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           HEALTH REMINDER
+        ===================================================== */
+
+        .health-reminder {
+            margin-top: 22px;
+
+            padding: 21px 23px;
+
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            border: 1px solid rgba(74, 222, 128, 0.18);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(74, 222, 128, 0.07),
+                    rgba(255, 255, 255, 0.02)
+                );
+        }
+
+        .health-reminder-icon {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background: rgba(74, 222, 128, 0.10);
+
+            color: #4ade80;
+
+            font-size: 18px;
+        }
+
+        .health-reminder h3 {
+            margin: 0 0 4px;
+
+            font-size: 16px;
+            font-weight: 750;
+        }
+
+        .health-reminder p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           PAGE ANIMATION
+        ===================================================== */
+
+        .healthtips-page .topbar,
+        .healthtips-page .healthtips-intro,
+        .healthtips-page .healthtip-card,
+        .healthtips-page .health-reminder {
+            animation: healthTipsIn 0.55s ease both;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(4) {
+            animation-delay: 0.20s;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .healthtips-page .healthtip-card:nth-child(6) {
+            animation-delay: 0.30s;
+        }
+
+        @keyframes healthTipsIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+            .healthtips-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .healthtips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .healthtips-intro h2 {
+                font-size: 25px;
+            }
+
+            .healthtip-card {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🚑 LifeLine AI
+        </div>
+
+        <button class="menu-btn"
+                onclick="window.location='/'">
+
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/firstaid'">
+
+            <i class="fa-solid fa-kit-medical"></i>
+            <span>First Aid</span>
+
+        </button>
+
+        <button class="menu-btn active"
+                aria-current="page">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>Health Tips</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/hospitals'">
+
+            <i class="fa-solid fa-hospital"></i>
+            <span>Hospitals</span>
+
+        </button>
+
+        <button class="menu-btn"
+                onclick="window.location='/about'">
+
+            <i class="fa-solid fa-circle-info"></i>
+            <span>About</span>
+
+        </button>
+
+        <button class="menu-btn sos">
+
+            🚨
+            <span>SOS</span>
+
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main healthtips-page">
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>💚 Health Tips</h1>
+
+                <p>
+                    Simple everyday habits for a healthier lifestyle.
+                </p>
+
+            </div>
+
+            <div class="profile">
+                ❤️ Stay Safe
+            </div>
+
+        </div>
+
+
+        <!-- INTRO -->
+
+        <section class="healthtips-intro">
+
+            <h2>Healthy Living, One Step at a Time</h2>
+
+            <p>
+                Small daily habits can support your overall wellbeing.
+                Use these tips as general wellness guidance and seek
+                professional advice when you have health concerns.
+            </p>
+
+        </section>
+
+
+        <!-- HEALTH CARDS -->
+
+        <section class="healthtips-grid">
+
+
+            <!-- Healthy Diet -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-carrot"></i>
+                </div>
+
+                <h3>Healthy Diet</h3>
+
+                <p>
+                    Choose a variety of fruits, vegetables, whole grains,
+                    protein sources and other nutritious foods as part of
+                    balanced meals.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-leaf"></i>
+                    &nbsp;Nutrition
+                </span>
+
+            </article>
+
+
+            <!-- Hydration -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+
+                <h3>Stay Hydrated</h3>
+
+                <p>
+                    Drink water regularly throughout the day. Your
+                    hydration needs can vary depending on activity,
+                    weather and individual circumstances.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-glass-water"></i>
+                    &nbsp;Hydration
+                </span>
+
+            </article>
+
+
+            <!-- Exercise -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-person-running"></i>
+                </div>
+
+                <h3>Stay Active</h3>
+
+                <p>
+                    Include regular movement such as walking, stretching
+                    or other suitable physical activities in your routine.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-person-walking"></i>
+                    &nbsp;Activity
+                </span>
+
+            </article>
+
+
+            <!-- Sleep -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+
+                <h3>Quality Sleep</h3>
+
+                <p>
+                    Maintain a consistent sleep routine and create a
+                    comfortable environment that helps you get enough
+                    restorative sleep.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-bed"></i>
+                    &nbsp;Rest
+                </span>
+
+            </article>
+
+
+            <!-- Hygiene -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-hands-bubbles"></i>
+                </div>
+
+                <h3>Personal Hygiene</h3>
+
+                <p>
+                    Wash your hands regularly, maintain personal
+                    cleanliness and follow good everyday hygiene habits.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    &nbsp;Wellness
+                </span>
+
+            </article>
+
+
+            <!-- Checkups -->
+
+            <article class="healthtip-card">
+
+                <div class="healthtip-icon">
+                    <i class="fa-solid fa-stethoscope"></i>
+                </div>
+
+                <h3>Health Checkups</h3>
+
+                <p>
+                    Regular healthcare visits can help you discuss
+                    concerns, preventive care and appropriate screenings
+                    with a qualified professional.
+                </p>
+
+                <span class="healthtip-label">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    &nbsp;Prevention
+                </span>
+
+            </article>
+
+        </section>
+
+
+        <!-- REMINDER -->
+
+        <section class="health-reminder">
+
+            <div class="health-reminder-icon">
+                <i class="fa-solid fa-heart-circle-check"></i>
+            </div>
+
+            <div>
+
+                <h3>Take Care of Yourself</h3>
+
+                <p>
+                    These are general wellness tips, not medical advice.
+                    If you have persistent or serious symptoms, contact
+                    a qualified healthcare professional.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | LifeLine AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #f8fafc;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(59, 130, 246, 0.20),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(34, 211, 238, 0.14),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(99, 102, 241, 0.12),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617 0%,
+                    #071426 45%,
+                    #030712 100%
+                );
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            top: -220px;
+            left: -180px;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.12);
+            filter: blur(90px);
+            pointer-events: none;
+            animation: floatGlow 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            right: -180px;
+            bottom: -180px;
+            border-radius: 50%;
+            background: rgba(34, 211, 238, 0.08);
+            filter: blur(100px);
+            pointer-events: none;
+            animation: floatGlow 10s ease-in-out infinite reverse;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= ANIMATIONS ================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatGlow {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, 15px);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.10);
+            }
+
+            50% {
+                box-shadow: 0 0 0 12px rgba(34, 211, 238, 0);
+            }
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            padding: 15px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(2, 6, 23, 0.78);
+            border-bottom: 1px solid rgba(96, 165, 250, 0.14);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            animation: fadeDown 0.7s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+
+            white-space: nowrap;
+        }
+
+        .logo::before {
+            content: "✦";
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+
+            color: white;
+            font-size: 17px;
+
+            box-shadow:
+                0 8px 25px rgba(37, 99, 235, 0.28);
+        }
+
+        .logo span {
+            color: #22d3ee;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            position: relative;
+
+            padding: 9px 13px;
+            border-radius: 10px;
+
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+
+            position: absolute;
+            left: 50%;
+            bottom: 3px;
+
+            width: 0;
+            height: 2px;
+
+            border-radius: 10px;
+
+            background: #22d3ee;
+
+            transform: translateX(-50%);
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(59, 130, 246, 0.10);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 18px;
+        }
+
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(59, 130, 246, 0.14);
+        }
+
+        .logout {
+            border: 1px solid rgba(248, 113, 113, 0.20);
+        }
+
+        .logout:hover {
+            color: #fca5a5 !important;
+            background: rgba(239, 68, 68, 0.10) !important;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 88%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            padding: 70px 0 38px;
+            animation: fadeUp 0.7s ease 0.1s both;
+        }
+
+        .welcome-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 14px;
+            margin-bottom: 18px;
+
+            border-radius: 30px;
+
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.22);
+
+            color: #67e8f9;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+
+            animation: pulse 3s infinite;
+        }
+
+        .hero h1 {
+            max-width: 900px;
+
+            font-size: clamp(35px, 5vw, 58px);
+            line-height: 1.08;
+
+            margin-bottom: 18px;
+
+            letter-spacing: -1.5px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(
+                90deg,
+                #60a5fa,
+                #22d3ee
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+
+            color: #94a3b8;
+
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        /* ================= ADVANCED DASHBOARD ================= */
+
+        .advanced-box {
+            position: relative;
+            overflow: hidden;
+
+            margin: 20px 0 55px;
+            padding: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37, 99, 235, 0.18),
+                    rgba(8, 47, 73, 0.32)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.24);
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.20),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+            backdrop-filter: blur(15px);
+
+            animation: fadeUp 0.7s ease 0.2s both;
+        }
+
+        .advanced-box::before {
+            content: "";
+
+            position: absolute;
+            width: 220px;
+            height: 220px;
+
+            top: -120px;
+            right: 20%;
+
+            border-radius: 50%;
+
+            background: rgba(34, 211, 238, 0.08);
+
+            filter: blur(50px);
+        }
+
+        .advanced-box > div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .advanced-box h2 {
+            margin-bottom: 8px;
+
+            font-size: 23px;
+        }
+
+        .advanced-box p {
+            color: #94a3b8;
+            line-height: 1.55;
+        }
+
+        .advanced-btn {
+            position: relative;
+            z-index: 2;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            white-space: nowrap;
+
+            padding: 13px 21px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #0891b2
+                );
+
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+
+            box-shadow:
+                0 10px 30px rgba(37, 99, 235, 0.28);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .advanced-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 16px 38px rgba(34, 211, 238, 0.25);
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 58px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 235px;
+            padding: 27px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 27, 50, 0.80),
+                    rgba(8, 18, 35, 0.72)
+                );
+
+            border: 1px solid rgba(148, 163, 184, 0.12);
+
+            backdrop-filter: blur(16px);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            top: -70px;
+            right: -50px;
+
+            border-radius: 50%;
+
+            background: rgba(59, 130, 246, 0.08);
+
+            filter: blur(30px);
+
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            border-color: rgba(96, 165, 250, 0.36);
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.28),
+                0 0 30px rgba(37, 99, 235, 0.06);
+        }
+
+        .card:hover::before {
+            background: rgba(34, 211, 238, 0.12);
+        }
+
+        .icon {
+            position: relative;
+
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(59, 130, 246, 0.16),
+                    rgba(34, 211, 238, 0.08)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.20);
+
+            font-size: 25px;
+
+            margin-bottom: 18px;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.08) rotate(-2deg);
+
+            box-shadow:
+                0 10px 25px rgba(37, 99, 235, 0.16);
+        }
+
+        .card h3 {
+            position: relative;
+
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            position: relative;
+
+            color: #94a3b8;
+            line-height: 1.65;
+
+            margin-bottom: 21px;
+
+            font-size: 14px;
+        }
+
+        .card-link {
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #60a5fa;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                gap 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .card-link:hover {
+            gap: 11px;
+            color: #67e8f9;
+        }
+
+        /* ================= PERSONALIZATION ================= */
+
+        .personalization {
+            position: relative;
+            overflow: hidden;
+
+            margin-bottom: 58px;
+            padding: 31px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.90),
+                    rgba(8, 47, 73, 0.54)
+                );
+
+            border: 1px solid rgba(34, 211, 238, 0.18);
+
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.18);
+
+            animation: fadeUp 0.7s ease 0.4s both;
+        }
+
+        .personalization::after {
+            content: "🎯";
+
+            position: absolute;
+
+            right: 35px;
+            top: 28px;
+
+            font-size: 55px;
+            opacity: 0.08;
+
+            transform: rotate(10deg);
+        }
+
+        .personalization h2 {
+            position: relative;
+            z-index: 1;
+
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+
+        .personalization p {
+            position: relative;
+            z-index: 1;
+
+            max-width: 750px;
+
+            color: #94a3b8;
+
+            line-height: 1.65;
+
+            margin-bottom: 21px;
+
+            font-size: 14px;
+        }
+
+        .personalize-btn {
+            position: relative;
+            z-index: 2;
+
+            display: inline-flex;
+            align-items: center;
+
+            padding: 12px 20px;
+
+            border-radius: 11px;
+
+            background: rgba(34, 211, 238, 0.10);
+
+            border: 1px solid rgba(34, 211, 238, 0.25);
+
+            color: #67e8f9;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .personalize-btn:hover {
+            transform: translateY(-3px);
+
+            background: rgba(34, 211, 238, 0.16);
+
+            box-shadow:
+                0 10px 25px rgba(34, 211, 238, 0.08);
+        }
+
+        /* ================= QUICK ACCESS ================= */
+
+        .quick-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 58px;
+        }
+
+        .quick-item {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 82px;
+
+            padding: 19px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 27, 50, 0.72),
+                    rgba(8, 18, 35, 0.70)
+                );
+
+            border: 1px solid rgba(148, 163, 184, 0.11);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .quick-item::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 3px;
+            height: 100%;
+
+            background: linear-gradient(
+                180deg,
+                #2563eb,
+                #22d3ee
+            );
+
+            transform: scaleY(0);
+
+            transform-origin: center;
+
+            transition: transform 0.25s ease;
+        }
+
+        .quick-item:hover {
+            transform: translateY(-4px);
+
+            border-color: rgba(96, 165, 250, 0.28);
+
+            background:
+                rgba(20, 40, 72, 0.76);
+        }
+
+        .quick-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .quick-left {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+        }
+
+        .quick-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: rgba(59, 130, 246, 0.09);
+
+            font-size: 21px;
+
+            transition: transform 0.25s ease;
+        }
+
+        .quick-item:hover .quick-icon {
+            transform: scale(1.08);
+        }
+
+        .quick-item strong {
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-size: 14px;
+        }
+
+        .quick-item small {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .arrow {
+            color: #60a5fa;
+            font-size: 20px;
+
+            transition:
+                transform 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .quick-item:hover .arrow {
+            color: #67e8f9;
+            transform: translateX(5px);
+        }
+
+        /* ================= EMERGENCY ================= */
+
+        .emergency {
+            position: relative;
+            overflow: hidden;
+
+            margin-bottom: 60px;
+
+            padding: 29px;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(127, 29, 29, 0.15),
+                    rgba(69, 10, 10, 0.10)
+                );
+
+            border: 1px solid rgba(248, 113, 113, 0.18);
+
+            animation: fadeUp 0.7s ease 0.6s both;
+        }
+
+        .emergency::before {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: -80px;
+            top: -90px;
+
+            border-radius: 50%;
+
+            background: rgba(248, 113, 113, 0.06);
+
+            filter: blur(35px);
+        }
+
+        .emergency h2 {
+            position: relative;
+
+            color: #fca5a5;
+
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+
+        .emergency p {
+            position: relative;
+
+            max-width: 850px;
+
+            color: #94a3b8;
+
+            line-height: 1.65;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+        .emergency-links {
+            position: relative;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .emergency-btn {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            background: rgba(239, 68, 68, 0.09);
+
+            border: 1px solid rgba(239, 68, 68, 0.22);
+
+            color: #fca5a5;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .emergency-btn:hover {
+            transform: translateY(-2px);
+
+            background: rgba(239, 68, 68, 0.17);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 27px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+            font-size: 12px;
+
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 14px 4%;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .container {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                justify-content: flex-start;
+
+                overflow-x: auto;
+                padding-bottom: 3px;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                height: 3px;
+            }
+
+            .nav-links::-webkit-scrollbar-thumb {
+                background: rgba(96, 165, 250, 0.25);
+                border-radius: 10px;
+            }
+
+            .advanced-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .advanced-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: 92%;
+            }
+
+            .hero {
+                padding: 45px 0 30px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                min-height: auto;
+                padding: 23px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .advanced-box,
+            .personalization,
+            .emergency {
+                padding: 22px;
+            }
+
+            .personalization::after {
+                right: 18px;
+                top: 20px;
+                font-size: 42px;
+            }
+
+            .section-title h2 {
+                font-size: 23px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .nav-links a {
+                padding: 8px 10px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 420px) {
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .welcome-tag {
+                font-size: 11px;
+            }
+
+            .quick-item {
+                padding: 16px;
+            }
+
+            .quick-left {
+                gap: 10px;
+            }
+
+            .quick-item small {
+                font-size: 11px;
+            }
+
+            .emergency-links {
+                flex-direction: column;
+            }
+
+            .emergency-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ================= ACCESSIBILITY ================= */
+
+        a:focus-visible {
+            outline: 2px solid #22d3ee;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('dashboard') }}" class="logo">
+            LifeLine <span>AI</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}" class="active">
+                Home
+            </a>
+
+            <a href="{{ url_for('chat') }}">
+                AI Assistant
+            </a>
+
+            <a href="{{ url_for('age_mode') }}">
+                Personalization
+            </a>
+
+            <a href="{{ url_for('routines') }}">
+                Routines
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="welcome-tag">
+                ✦ Logged-in Care Dashboard
+            </div>
+
+            <h1>
+                Welcome back,
+                <span>{{ user.name }}</span> 👋
+            </h1>
+
+            <p>
+                Your personal LifeLine AI care space. Get quick access to
+                AI assistance, routines, history, personalization and
+                essential care resources.
+            </p>
+
+        </section>
+
+
+        <!-- ================= ADVANCED DASHBOARD ================= -->
+
+        <section class="advanced-box">
+
+            <div>
+
+                <h2>
+                    ⚡ Advanced Dashboard
+                </h2>
+
+                <p>
+                    Explore deeper insights, care tracking and advanced
+                    LifeLine AI features.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('advanced_dashboard') }}"
+                class="advanced-btn"
+            >
+                Advanced Dashboard →
+            </a>
+
+        </section>
+
+
+        <!-- ================= CORE FEATURES ================= -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>
+                    Core Features
+                </h2>
+
+                <p>
+                    Everything you need in one place.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <!-- AI ASSISTANT -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        AI Assistant
+                    </h3>
+
+                    <p>
+                        Ask LifeLine AI about basic care, first aid,
+                        health education, animals, birds, plants and trees.
+                    </p>
+
+                    <a
+                        href="{{ url_for('chat') }}"
+                        class="card-link"
+                    >
+                        Open AI Assistant →
+                    </a>
+
+                </div>
+
+
+                <!-- ROUTINES -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        🔔
+                    </div>
+
+                    <h3>
+                        My Routines
+                    </h3>
+
+                    <p>
+                        Create and manage your personal care routines,
+                        reminders and daily activities.
+                    </p>
+
+                    <a
+                        href="{{ url_for('routines') }}"
+                        class="card-link"
+                    >
+                        Manage Routines →
+                    </a>
+
+                </div>
+
+
+                <!-- HISTORY -->
+
+                <div class="card">
+
+                    <div class="icon">
+                        🕘
+                    </div>
+
+                    <h3>
+                        Chat History
+                    </h3>
+
+                    <p>
+                        View your previous AI conversations and keep track
+                        of the information you have explored.
+                    </p>
+
+                    <a
+                        href="{{ url_for('history') }}"
+                        class="card-link"
+                    >
+                        View History →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PERSONALIZATION ================= -->
+
+        <section class="personalization">
+
+            <h2>
+                🎯 Personalize Your Care
+            </h2>
+
+            <p>
+                Choose an age-based care mode to make the information
+                more suitable for Child, Adult or Senior users.
+                You can change this anytime.
+            </p>
+
+            <a
+                href="{{ url_for('age_mode') }}"
+                class="personalize-btn"
+            >
+                Choose Personalization →
+            </a>
+
+        </section>
+
+
+        <!-- ================= QUICK ACCESS ================= -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>
+                    Quick Care Access
+                </h2>
+
+                <p>
+                    Explore LifeLine AI's basic care resources.
+                </p>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+                <!-- FIRST AID -->
+
+                <a
+                    href="{{ url_for('firstaid') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            🩹
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                First Aid
+                            </strong>
+
+                            <small>
+                                Basic first-aid guidance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <!-- HEALTH TIPS -->
+
+                <a
+                    href="{{ url_for('healthtips') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            💙
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Health Tips
+                            </strong>
+
+                            <small>
+                                General health education
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <!-- HOSPITALS -->
+
+                <a
+                    href="{{ url_for('hospitals') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            🏥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Find Hospitals
+                            </strong>
+
+                            <small>
+                                Access hospital resources
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <!-- ANIMAL CARE -->
+
+                <a
+                    href="{{ url_for('chat') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            🐾
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Animal & Bird Care
+                            </strong>
+
+                            <small>
+                                Basic educational care guidance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <!-- PLANT CARE -->
+
+                <a
+                    href="{{ url_for('chat') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            🌱
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Plant & Tree Care
+                            </strong>
+
+                            <small>
+                                Basic plant-care guidance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+
+                <!-- ASK AI -->
+
+                <a
+                    href="{{ url_for('chat') }}"
+                    class="quick-item"
+                >
+
+                    <div class="quick-left">
+
+                        <div class="quick-icon">
+                            💬
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ask LifeLine AI
+                            </strong>
+
+                            <small>
+                                Start a care conversation
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= EMERGENCY ================= -->
+
+        <section class="emergency">
+
+            <h2>
+                🚨 Emergency Notice
+            </h2>
+
+            <p>
+                LifeLine AI provides general educational information.
+                For serious or life-threatening situations, contact
+                emergency services or seek professional medical help immediately.
+            </p>
+
+            <div class="emergency-links">
+
+                <a
+                    href="tel:108"
+                    class="emergency-btn"
+                >
+                    📞 Call 108
+                </a>
+
+                <a
+                    href="tel:112"
+                    class="emergency-btn"
+                >
+                    📞 Call 112
+                </a>
+
+                <a
+                    href="{{ url_for('hospitals') }}"
+                    class="emergency-btn"
+                >
+                    🏥 Hospitals
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+        LifeLine AI © 2026 · General care education and assistance
+    </footer>
+
+
+</body>
+</html>

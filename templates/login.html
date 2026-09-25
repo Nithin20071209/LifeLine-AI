@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | LifeLine AI</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cyan: #00d4ff;
+            --green: #00ffa3;
+            --text: #f4f8fc;
+            --muted: #94a9bd;
+            --panel: rgba(255,255,255,0.075);
+            --border: rgba(255,255,255,0.12);
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 18px;
+
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(0,212,255,0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(0,255,163,0.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(72,88,255,0.12),
+                    transparent 35%
+                ),
+                #050b15;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           BACKGROUND GLOW
+        ===================================================== */
+
+        .bg-glow {
+
+            position: fixed;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            pointer-events: none;
+
+            opacity: 0.35;
+
+            animation: floatGlow 8s ease-in-out infinite alternate;
+        }
+
+        .glow-one {
+
+            top: -120px;
+            left: -100px;
+
+            background: rgba(0,212,255,0.35);
+        }
+
+        .glow-two {
+
+            right: -120px;
+            bottom: -100px;
+
+            background: rgba(0,255,163,0.25);
+
+            animation-delay: 2s;
+        }
+
+        @keyframes floatGlow {
+
+            from {
+                transform: translate3d(0,0,0);
+            }
+
+            to {
+                transform: translate3d(25px,-20px,0);
+            }
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .login-container {
+
+            position: relative;
+
+            width: 440px;
+            max-width: 100%;
+
+            padding: 42px 40px 34px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.10),
+                    rgba(255,255,255,0.045)
+                );
+
+            border: 1px solid var(--border);
+
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+
+            box-shadow:
+                0 30px 90px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+
+            animation: containerIn 0.65s ease both;
+        }
+
+        @keyframes containerIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           TOP ACCENT
+        ===================================================== */
+
+        .top-line {
+
+            position: absolute;
+
+            top: 0;
+            left: 12%;
+
+            width: 76%;
+            height: 2px;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cyan),
+                    var(--green),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 18px rgba(0,212,255,0.45);
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+
+            width: 76px;
+            height: 76px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--cyan),
+                    var(--green)
+                );
+
+            color: #04111b;
+
+            font-size: 31px;
+
+            box-shadow:
+                0 0 35px rgba(0,212,255,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.45);
+
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 30px rgba(0,212,255,0.20);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 45px rgba(0,212,255,0.38);
+            }
+        }
+
+        .logo h1 {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+        }
+
+        .logo h1 span {
+            color: var(--cyan);
+        }
+
+        .logo p {
+
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           WELCOME TEXT
+        ===================================================== */
+
+        .welcome {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+
+            font-size: 19px;
+
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGE
+        ===================================================== */
+
+        .message {
+
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            padding: 12px 14px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,80,80,0.10);
+
+            border:
+                1px solid rgba(255,100,100,0.20);
+
+            color: #ffb9b9;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            animation: messageIn 0.4s ease both;
+        }
+
+        .message::before {
+
+            content: "⚠";
+
+            flex-shrink: 0;
+        }
+
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
+        .input-box {
+
+            margin-bottom: 19px;
+        }
+
+        .input-box label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #dce8f2;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+        .input-wrapper i {
+
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #71889d;
+
+            font-size: 14px;
+
+            transition: 0.25s ease;
+
+            pointer-events: none;
+        }
+
+        input {
+
+            width: 100%;
+
+            min-height: 50px;
+
+            padding:
+                13px
+                15px
+                13px
+                45px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid rgba(255,255,255,0.11);
+
+            background:
+                rgba(2,8,17,0.52);
+
+            color: white;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        input::placeholder {
+            color: #63788c;
+        }
+
+        input:hover {
+
+            border-color:
+                rgba(255,255,255,0.18);
+        }
+
+        input:focus {
+
+            border-color: var(--cyan);
+
+            background:
+                rgba(2,12,22,0.72);
+
+            box-shadow:
+                0 0 0 3px rgba(0,212,255,0.09),
+                0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .input-wrapper:focus-within i {
+
+            color: var(--cyan);
+
+            transform:
+                translateY(-50%)
+                scale(1.08);
+        }
+
+
+        /* =====================================================
+           AUTOFILL
+        ===================================================== */
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+
+            -webkit-text-fill-color: white;
+
+            transition:
+                background-color 9999s ease-in-out 0s;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
+        .btn {
+
+            width: 100%;
+
+            min-height: 52px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--cyan),
+                    var(--green)
+                );
+
+            color: #04111a;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(0,212,255,0.12);
+
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                filter 0.22s ease;
+        }
+
+        .btn:hover {
+
+            transform: translateY(-2px);
+
+            filter: brightness(1.04);
+
+            box-shadow:
+                0 15px 35px rgba(0,212,255,0.20);
+        }
+
+        .btn:active {
+
+            transform: translateY(0);
+        }
+
+        .btn:focus-visible {
+
+            outline: 2px solid white;
+
+            outline-offset: 3px;
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 24px 0 20px;
+
+            color: #60768a;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background:
+                rgba(255,255,255,0.09);
+        }
+
+
+        /* =====================================================
+           CREATE ACCOUNT
+        ===================================================== */
+
+        .bottom {
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        .bottom a {
+
+            color: var(--cyan);
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .bottom a:hover {
+
+            color: var(--green);
+
+            text-decoration: underline;
+        }
+
+        .bottom a:focus-visible {
+
+            outline: 2px solid var(--cyan);
+
+            outline-offset: 3px;
+
+            border-radius: 3px;
+        }
+
+
+        /* =====================================================
+           GUEST
+        ===================================================== */
+
+        .guest {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 19px;
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            color: #8da3b7;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .guest:hover {
+
+            background:
+                rgba(255,255,255,0.045);
+
+            color: white;
+        }
+
+        .guest:focus-visible {
+
+            outline: 2px solid var(--cyan);
+
+            outline-offset: 2px;
+        }
+
+
+        /* =====================================================
+           SAFETY NOTE
+        ===================================================== */
+
+        .safety {
+
+            margin-top: 22px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            color: #6f8599;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 520px) {
+
+            body {
+
+                padding: 18px 12px;
+
+                align-items: center;
+            }
+
+            .login-container {
+
+                padding:
+                    32px
+                    22px
+                    25px;
+
+                border-radius: 22px;
+            }
+
+            .logo {
+
+                margin-bottom: 24px;
+            }
+
+            .logo-icon {
+
+                width: 66px;
+                height: 66px;
+
+                border-radius: 19px;
+
+                font-size: 27px;
+            }
+
+            .logo h1 {
+
+                font-size: 26px;
+            }
+
+            .welcome h2 {
+
+                font-size: 18px;
+            }
+
+            input {
+
+                min-height: 49px;
+            }
+
+            .btn {
+
+                min-height: 50px;
+            }
+        }
+
+
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            .login-container {
+
+                padding:
+                    28px
+                    18px
+                    22px;
+            }
+
+            .logo h1 {
+
+                font-size: 24px;
+            }
+
+            .logo p {
+
+                font-size: 13px;
+            }
+
+            .welcome {
+
+                margin-bottom: 21px;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: 0.01ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                scroll-behavior: auto !important;
+
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="bg-glow glow-one"></div>
+    <div class="bg-glow glow-two"></div>
+
+
+    <main class="login-container">
+
+        <div class="top-line"></div>
+
+
+        <!-- =================================================
+             LOGO
+        ================================================== -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-heart-pulse"></i>
+
+            </div>
+
+            <h1>
+                LifeLine <span>AI</span>
+            </h1>
+
+            <p>
+                Your AI Care Assistant
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             WELCOME
+        ================================================== -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome back 👋
+            </h2>
+
+            <p>
+                Sign in to continue your personalized care experience.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="{{ url_for('login') }}"
+            autocomplete="off"
+        >
+
+            <!-- EMAIL -->
+
+            <div class="input-box">
+
+                <label for="login-email">
+                    Email
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        id="login-email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="off"
+                        autocapitalize="none"
+                        spellcheck="false"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-box">
+
+                <label for="login-password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        id="login-password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <button
+                class="btn"
+                type="submit"
+            >
+
+                <i class="fa-solid fa-right-to-bracket"></i>
+
+                Login
+
+            </button>
+
+        </form>
+
+
+        <!-- =================================================
+             DIVIDER
+        ================================================== -->
+
+        <div class="divider">
+            Account
+        </div>
+
+
+        <!-- =================================================
+             SIGNUP
+        ================================================== -->
+
+        <div class="bottom">
+
+            Don't have an account?
+
+            <a href="{{ url_for('signup') }}">
+                Create Account
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             GUEST
+        ================================================== -->
+
+        <a
+            class="guest"
+            href="{{ url_for('home') }}"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Continue as Guest
+
+        </a>
+
+
+        <!-- =================================================
+             SAFETY
+        ================================================== -->
+
+        <div class="safety">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+            Your LifeLine AI account provides access to
+            personalized care features and saved activity.
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

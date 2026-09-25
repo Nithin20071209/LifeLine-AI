@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LifeLine AI | Senior Care</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            color: #f8fafc;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(56, 189, 248, 0.13),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(99, 102, 241, 0.12),
+                    transparent 28%
+                ),
+                #020617;
+        }
+
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .senior-page {
+            max-width: 1150px;
+            margin: auto;
+            padding: 25px;
+        }
+
+
+        /* =========================================
+           TOP BAR
+        ========================================= */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .change-mode {
+            text-decoration: none;
+
+            color: #e2e8f0;
+
+            border: 1px solid #334155;
+
+            padding: 12px 18px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            transition: 0.25s;
+        }
+
+        .change-mode:hover {
+            border-color: #38bdf8;
+
+            background: rgba(56, 189, 248, 0.08);
+
+            color: white;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 1.5fr 0.7fr;
+
+            align-items: center;
+
+            gap: 25px;
+
+            padding: 45px;
+
+            margin-bottom: 28px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.98),
+                    rgba(14, 35, 58, 0.94)
+                );
+
+            border: 1px solid #1e4d70;
+
+            overflow: hidden;
+        }
+
+        .mode-badge {
+            display: inline-block;
+
+            padding: 10px 17px;
+
+            margin-bottom: 20px;
+
+            border-radius: 30px;
+
+            background: rgba(56, 189, 248, 0.10);
+
+            border: 1px solid rgba(56, 189, 248, 0.35);
+
+            color: #7dd3fc;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 58px);
+
+            line-height: 1.08;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #38bdf8;
+        }
+
+        .hero p {
+            max-width: 680px;
+
+            color: #a8bad0;
+
+            font-size: 18px;
+
+            line-height: 1.75;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-block;
+
+            padding: 16px 24px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            transition: 0.25s;
+        }
+
+        .primary-btn {
+            background: #38bdf8;
+
+            color: #03101c;
+        }
+
+        .primary-btn:hover {
+            background: #67d3ff;
+
+            transform: translateY(-3px);
+        }
+
+        .secondary-btn {
+            background: rgba(15, 23, 42, 0.75);
+
+            color: white;
+
+            border: 1px solid #334155;
+        }
+
+        .secondary-btn:hover {
+            border-color: #38bdf8;
+
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .senior-avatar {
+            width: 180px;
+
+            height: 180px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            font-size: 90px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(56, 189, 248, 0.18),
+                    transparent 70%
+                );
+
+            box-shadow:
+                0 0 65px rgba(56, 189, 248, 0.14);
+        }
+
+
+        /* =========================================
+           TOP NAV CARDS
+        ========================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            display: block;
+
+            min-height: 160px;
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            background: rgba(15, 23, 42, 0.88);
+
+            border: 1px solid #1e293b;
+
+            color: inherit;
+
+            text-decoration: none;
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.28);
+        }
+
+        .stat-icon {
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 16px;
+
+            border-radius: 14px;
+
+            background: #10213b;
+
+            font-size: 28px;
+        }
+
+        .stat-card h3 {
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: #9fb1c8;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           SECTION TITLE
+        ========================================= */
+
+        .section-title {
+            margin-bottom: 22px;
+        }
+
+        .section-title h2 {
+            font-size: 31px;
+
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #9fb1c8;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================================
+           CARE GRID
+        ========================================= */
+
+        .care-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 17px;
+
+            margin-bottom: 35px;
+        }
+
+        .care-card {
+            display: block;
+
+            min-height: 205px;
+
+            padding: 24px;
+
+            border-radius: 20px;
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            color: inherit;
+
+            text-decoration: none;
+
+            transition: 0.25s;
+        }
+
+        .care-card:hover {
+            transform: translateY(-6px);
+
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .care-icon {
+            font-size: 34px;
+
+            margin-bottom: 18px;
+        }
+
+        .care-card h3 {
+            font-size: 19px;
+
+            margin-bottom: 9px;
+        }
+
+        .care-card p {
+            color: #9fb1c8;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+        .card-arrow {
+            display: block;
+
+            margin-top: 16px;
+
+            color: #38bdf8;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================
+           AUDIO
+        ========================================= */
+
+        .audio-box {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 24px;
+
+            margin: 30px 0 45px;
+
+            border-radius: 20px;
+
+            background: #0d1b2e;
+
+            border: 1px solid #21415f;
+        }
+
+        .audio-info h3 {
+            font-size: 20px;
+
+            margin-bottom: 7px;
+        }
+
+        .audio-info p {
+            color: #9fb1c8;
+
+            font-size: 14px;
+        }
+
+        .audio-status {
+            margin-top: 8px;
+
+            color: #7dd3fc !important;
+        }
+
+        .audio-controls {
+            display: flex;
+
+            gap: 9px;
+
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            border: 1px solid #334155;
+
+            background: #111d31;
+
+            color: white;
+
+            padding: 12px 16px;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .audio-btn:hover {
+            border-color: #38bdf8;
+        }
+
+        .audio-btn.active {
+            background: #38bdf8;
+
+            color: #03101c;
+
+            border-color: #38bdf8;
+        }
+
+
+        /* =========================================
+           QUICK ACTIONS
+        ========================================= */
+
+        .quick-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 17px;
+
+            margin-bottom: 30px;
+        }
+
+        .quick-card {
+            display: block;
+
+            padding: 26px;
+
+            border-radius: 20px;
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            color: inherit;
+
+            text-decoration: none;
+
+            transition: 0.25s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #38bdf8;
+        }
+
+        .quick-icon {
+            font-size: 35px;
+
+            margin-bottom: 15px;
+        }
+
+        .quick-card h3 {
+            font-size: 20px;
+
+            margin-bottom: 9px;
+        }
+
+        .quick-card p {
+            color: #9fb1c8;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+        .quick-link {
+            display: block;
+
+            margin-top: 16px;
+
+            color: #38bdf8;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================
+           TRUSTED CONTACT
+        ========================================= */
+
+        .trusted-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 28px;
+
+            margin: 30px 0;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.98),
+                    rgba(14, 35, 58, 0.92)
+                );
+
+            border: 1px solid #214c70;
+        }
+
+        .trusted-icon {
+            width: 65px;
+
+            height: 65px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background: #102a46;
+
+            font-size: 34px;
+        }
+
+        .trusted-box h2 {
+            font-size: 23px;
+
+            margin-bottom: 7px;
+        }
+
+        .trusted-box p {
+            color: #9fb1c8;
+
+            font-size: 15px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =========================================
+           AI BANNER
+        ========================================= */
+
+        .ai-banner {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 30px;
+
+            margin: 30px 0;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d1b2e,
+                    #102b46
+                );
+
+            border: 1px solid #214c70;
+        }
+
+        .ai-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .ai-icon {
+            width: 65px;
+
+            height: 65px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background: #102a46;
+
+            font-size: 34px;
+        }
+
+        .ai-banner h2 {
+            font-size: 24px;
+
+            margin-bottom: 7px;
+        }
+
+        .ai-banner p {
+            color: #9fb1c8;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+        .ai-start {
+            text-decoration: none;
+
+            background: #38bdf8;
+
+            color: #03101c;
+
+            padding: 15px 24px;
+
+            border-radius: 12px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+        }
+
+        .ai-start:hover {
+            background: #67d3ff;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           SAFETY NOTE
+        ========================================= */
+
+        .safety-note {
+            padding: 22px 27px;
+
+            margin-bottom: 25px;
+
+            border-radius: 18px;
+
+            background: #0d1b2e;
+
+            border: 1px solid #1e3a5f;
+
+            color: #cbd5e1;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        .safety-note strong {
+            color: #7dd3fc;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .care-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 760px) {
+
+            .senior-page {
+                padding: 18px;
+            }
+
+            .hero {
+                padding: 32px 24px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .audio-box {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .audio-controls {
+                width: 100%;
+            }
+
+            .ai-banner {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .ai-start {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .trusted-box {
+                align-items: flex-start;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+
+            .topbar {
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .change-mode {
+                font-size: 14px;
+
+                padding: 10px 13px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .care-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 27px 20px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .primary-btn,
+            .secondary-btn {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .audio-btn {
+                flex: 1;
+            }
+
+            .trusted-box {
+                flex-direction: column;
+            }
+
+            .ai-left {
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="senior-page">
+
+
+    <!-- =========================================
+         TOP BAR
+    ========================================== -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            💙 LifeLine <span>Senior</span>
+        </div>
+
+        <a href="{{ url_for('age_mode') }}"
+           class="change-mode">
+            ← Change Mode
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <div>
+
+            <div class="mode-badge">
+                👴 Senior Care Mode
+            </div>
+
+            <h1>
+                Simple,
+                <span>Clear Care</span>
+                for Every Day
+            </h1>
+
+            <p>
+                LifeLine helps you organize reminders,
+                appointments, daily routines and general
+                care information in one simple place.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{{ url_for('chat') }}"
+                   class="primary-btn">
+                    🤖 Ask LifeLine AI
+                </a>
+
+                <a href="{{ url_for('routines') }}"
+                   class="secondary-btn">
+                    🔔 My Reminders
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="senior-avatar">
+                👴
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         TOP CLICKABLE CARDS
+    ========================================== -->
+
+    <div class="stats-grid">
+
+
+        <!-- AI CARE -->
+
+        <a href="{{ url_for('chat') }}"
+           class="stat-card">
+
+            <div class="stat-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Care
+            </h3>
+
+            <p>
+                Ask LifeLine AI
+            </p>
+
+        </a>
+
+
+        <!-- REMINDERS -->
+
+        <a href="{{ url_for('routines') }}"
+           class="stat-card">
+
+            <div class="stat-icon">
+                🔔
+            </div>
+
+            <h3>
+                Reminders
+            </h3>
+
+            <p>
+                Keep important reminders
+            </p>
+
+        </a>
+
+
+        <!-- APPOINTMENTS -->
+
+        <a href="{{ url_for('routines') }}"
+           class="stat-card">
+
+            <div class="stat-icon">
+                📅
+            </div>
+
+            <h3>
+                Appointments
+            </h3>
+
+            <p>
+                Organize your schedule
+            </p>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a href="{{ url_for('history') }}"
+           class="stat-card">
+
+            <div class="stat-icon">
+                📜
+            </div>
+
+            <h3>
+                History
+            </h3>
+
+            <p>
+                View AI conversations
+            </p>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         EXPLORE SENIOR CARE
+    ========================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            🩺 Explore Senior Care
+        </h2>
+
+        <p>
+            Choose a simple care tool to get started.
+        </p>
+
+    </div>
+
+
+    <div class="care-grid">
+
+
+        <!-- AI CARE -->
+
+        <a href="{{ url_for('chat') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Care Assistant
+            </h3>
+
+            <p>
+                Ask LifeLine AI for general educational
+                information and everyday care guidance.
+            </p>
+
+            <span class="card-arrow">
+                Ask LifeLine AI →
+            </span>
+
+        </a>
+
+
+        <!-- REMINDERS -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                🔔
+            </div>
+
+            <h3>
+                Daily Reminders
+            </h3>
+
+            <p>
+                Create reminders for important
+                daily activities and routines.
+            </p>
+
+            <span class="card-arrow">
+                Set Reminder →
+            </span>
+
+        </a>
+
+
+        <!-- MEDICATION REMINDER -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                💊
+            </div>
+
+            <h3>
+                Medication Reminder
+            </h3>
+
+            <p>
+                Create a reminder to remember
+                your prescribed medication schedule.
+            </p>
+
+            <span class="card-arrow">
+                Create Reminder →
+            </span>
+
+        </a>
+
+
+        <!-- WATER -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                💧
+            </div>
+
+            <h3>
+                Water Reminder
+            </h3>
+
+            <p>
+                Set simple reminders to remember
+                regular water breaks.
+            </p>
+
+            <span class="card-arrow">
+                Set Water Reminder →
+            </span>
+
+        </a>
+
+
+        <!-- MOVEMENT -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                🚶
+            </div>
+
+            <h3>
+                Gentle Movement
+            </h3>
+
+            <p>
+                Organize gentle movement reminders
+                that fit your daily routine.
+            </p>
+
+            <span class="card-arrow">
+                Create Routine →
+            </span>
+
+        </a>
+
+
+        <!-- SLEEP -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                😴
+            </div>
+
+            <h3>
+                Sleep Routine
+            </h3>
+
+            <p>
+                Create a simple evening or bedtime
+                routine reminder.
+            </p>
+
+            <span class="card-arrow">
+                Create Routine →
+            </span>
+
+        </a>
+
+
+        <!-- APPOINTMENTS -->
+
+        <a href="{{ url_for('routines') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                📅
+            </div>
+
+            <h3>
+                Appointments
+            </h3>
+
+            <p>
+                Add reminders for upcoming
+                appointments and health visits.
+            </p>
+
+            <span class="card-arrow">
+                Add Appointment →
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a href="{{ url_for('history') }}"
+           class="care-card">
+
+            <div class="care-icon">
+                📜
+            </div>
+
+            <h3>
+                My History
+            </h3>
+
+            <p>
+                Review your previous conversations
+                with LifeLine AI.
+            </p>
+
+            <span class="card-arrow">
+                View History →
+            </span>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         AUDIO
+    ========================================== -->
+
+    <div class="audio-box">
+
+        <div class="audio-info">
+
+            <h3>
+                🔊 Listen & Learn
+            </h3>
+
+            <p>
+                Listen to a short LifeLine senior-care introduction.
+            </p>
+
+            <p id="audioStatus"
+               class="audio-status">
+                🔊 English selected
+            </p>
+
+        </div>
+
+
+        <div class="audio-controls">
+
+            <button
+                type="button"
+                class="audio-btn active"
+                id="englishBtn"
+                onclick="setAudioLanguage('en-IN')">
+
+                🇬🇧 English
+
+            </button>
+
+
+            <button
+                type="button"
+                class="audio-btn"
+                id="tamilBtn"
+                onclick="setAudioLanguage('ta-IN')">
+
+                🇮🇳 தமிழ்
+
+            </button>
+
+
+            <button
+                type="button"
+                class="audio-btn"
+                onclick="listenIntro()">
+
+                🔊 Listen
+
+            </button>
+
+
+            <button
+                type="button"
+                class="audio-btn"
+                onclick="stopAudio()">
+
+                ⏹ Stop
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         QUICK ACTIONS
+    ========================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            ⚡ Quick Actions
+        </h2>
+
+        <p>
+            Frequently used LifeLine tools.
+        </p>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+
+        <!-- REMINDERS -->
+
+        <a href="{{ url_for('routines') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+                🔔
+            </div>
+
+            <h3>
+                My Reminders
+            </h3>
+
+            <p>
+                Create reminders for water,
+                medication, appointments and routines.
+            </p>
+
+            <span class="quick-link">
+                Open Reminders →
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a href="{{ url_for('history') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+                📜
+            </div>
+
+            <h3>
+                My History
+            </h3>
+
+            <p>
+                Review your previous LifeLine AI
+                conversations whenever you need them.
+            </p>
+
+            <span class="quick-link">
+                View History →
+            </span>
+
+        </a>
+
+
+        <!-- EMERGENCY -->
+
+        <a href="{{ url_for('chat') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+                🚨
+            </div>
+
+            <h3>
+                Emergency Help
+            </h3>
+
+            <p>
+                For serious or urgent situations,
+                contact appropriate local emergency services.
+            </p>
+
+            <span class="quick-link">
+                Open LifeLine AI →
+            </span>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         TRUSTED CONTACT
+    ========================================== -->
+
+    <section class="trusted-box">
+
+        <div class="trusted-icon">
+            👨‍👩‍👧
+        </div>
+
+        <div>
+
+            <h2>
+                Family & Trusted Contact
+            </h2>
+
+            <p>
+                Keep a trusted family member, friend or
+                caregiver informed when you need support.
+                LifeLine can help you remember important
+                contact information, but it does not automatically
+                contact people or emergency services.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         AI BANNER
+    ========================================== -->
+
+    <section class="ai-banner">
+
+        <div class="ai-left">
+
+            <div class="ai-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <h2>
+                    Talk to LifeLine AI
+                </h2>
+
+                <p>
+                    Ask questions about general wellness,
+                    everyday safety, basic first-aid information,
+                    animal care and plant care.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('chat') }}"
+           class="ai-start">
+
+            Start Conversation →
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =========================================
+         SAFETY NOTE
+    ========================================== -->
+
+    <div class="safety-note">
+
+        🛡️
+
+        <strong>Important:</strong>
+
+        LifeLine AI provides general educational information
+        and does not replace doctors, pharmacists,
+        veterinarians or other qualified professionals.
+
+        Medication reminders are only for remembering
+        a schedule already provided by a qualified professional.
+
+        For serious or emergency situations,
+        seek appropriate professional help.
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     AUDIO JAVASCRIPT
+========================================= -->
+
+<script>
+
+    let audioLanguage =
+        localStorage.getItem(
+            "lifelineSeniorAudioLanguage"
+        ) || "en-IN";
+
+
+    const englishText =
+        "Welcome to LifeLine Senior Care. " +
+        "You can use LifeLine AI for general care information, " +
+        "reminders, appointments, water reminders, gentle movement " +
+        "and everyday routines. " +
+        "For serious or emergency situations, please contact " +
+        "an appropriate professional or local emergency service.";
+
+
+    const tamilText =
+        "லைஃப்லைன் சீனியர் கேர் பகுதிக்கு வரவேற்கிறோம். " +
+        "பொதுவான பராமரிப்பு தகவல்கள், நினைவூட்டல்கள், " +
+        "அப்பாயின்ட்மெண்ட்கள், தண்ணீர் நினைவூட்டல்கள், " +
+        "மென்மையான உடல் இயக்கம் மற்றும் தினசரி நடைமுறைகளுக்கு " +
+        "லைஃப்லைன் AI-ஐ பயன்படுத்தலாம். " +
+        "தீவிரமான அல்லது அவசரமான சூழ்நிலைகளில் " +
+        "பொருத்தமான நிபுணர் அல்லது உள்ளூர் அவசர சேவையை அணுகவும்.";
+
+
+    function setAudioLanguage(language) {
+
+        audioLanguage = language;
+
+        localStorage.setItem(
+            "lifelineSeniorAudioLanguage",
+            language
+        );
+
+
+        const englishBtn =
+            document.getElementById("englishBtn");
+
+        const tamilBtn =
+            document.getElementById("tamilBtn");
+
+        const status =
+            document.getElementById("audioStatus");
+
+
+        englishBtn.classList.remove("active");
+
+        tamilBtn.classList.remove("active");
+
+
+        if (language === "ta-IN") {
+
+            tamilBtn.classList.add("active");
+
+            status.innerText =
+                "🔊 தமிழ் selected";
+
+        } else {
+
+            englishBtn.classList.add("active");
+
+            status.innerText =
+                "🔊 English selected";
+        }
+    }
+
+
+    function listenIntro() {
+
+        if (!("speechSynthesis" in window)) {
+
+            alert(
+                "Speech is not supported in this browser."
+            );
+
+            return;
+        }
+
+
+        window.speechSynthesis.cancel();
+
+
+        const text =
+            audioLanguage === "ta-IN"
+                ? tamilText
+                : englishText;
+
+
+        const speech =
+            new SpeechSynthesisUtterance(text);
+
+
+        speech.lang = audioLanguage;
+
+        speech.rate = 0.88;
+
+        speech.pitch = 1;
+
+
+        window.speechSynthesis.speak(
+            speech
+        );
+    }
+
+
+    function stopAudio() {
+
+        if ("speechSynthesis" in window) {
+
+            window.speechSynthesis.cancel();
+
+        }
+    }
+
+
+    /* Restore selected language */
+
+    setAudioLanguage(audioLanguage);
+
+</script>
+
+
+</body>
+
+</html>

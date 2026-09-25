@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | LifeLine AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(circle at top left, #123b63, transparent 40%),
+                radial-gradient(circle at bottom right, #063b38, transparent 40%),
+                #07111f;
+
+            color: white;
+        }
+
+        .container {
+            width: 420px;
+            max-width: 92%;
+
+            padding: 40px;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            width: 70px;
+            height: 70px;
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: linear-gradient(135deg,#00d4ff,#00ffa3);
+
+            color: #06131f;
+
+            font-size: 30px;
+
+            box-shadow: 0 0 35px rgba(0,212,255,0.5);
+        }
+
+        h1 {
+            margin-top: 15px;
+        }
+
+        .logo p {
+            margin-top: 7px;
+
+            color: #9eb2c7;
+
+            font-size: 14px;
+        }
+
+        .input-box {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #d8e4ef;
+
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: rgba(0,0,0,0.22);
+
+            color: white;
+
+            outline: none;
+
+            transition: 0.25s ease;
+        }
+
+        input::placeholder {
+            color: #71859a;
+        }
+
+        input:focus {
+            border-color: #00d4ff;
+
+            box-shadow:
+                0 0 0 3px rgba(0,212,255,0.1);
+        }
+
+        /*
+            Browser autofill appearance
+        */
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: white;
+
+            transition:
+                background-color 9999s ease-in-out 0s;
+        }
+
+        .btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(135deg,#00d4ff,#00ffa3);
+
+            color: #06131f;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(0,212,255,0.20);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            margin-bottom: 15px;
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            background: rgba(255,80,80,0.15);
+
+            color: #ffb4b4;
+
+            text-align: center;
+
+            font-size: 13px;
+        }
+
+        .bottom {
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #9eb2c7;
+
+            font-size: 14px;
+        }
+
+        a {
+            color: #00d4ff;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+
+            .container {
+                padding: 30px 24px;
+
+                border-radius: 20px;
+            }
+
+            .icon {
+                width: 62px;
+                height: 62px;
+
+                font-size: 26px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+
+        <div class="icon">
+            ❤️
+        </div>
+
+        <h1>Join LifeLine AI</h1>
+
+        <p>Create your personal care account</p>
+
+    </div>
+
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- Privacy-aware signup form -->
+
+    <form method="POST"
+          action="{{ url_for('signup') }}"
+          autocomplete="off">
+
+        <div class="input-box">
+
+            <label for="signup-name">
+                Name
+            </label>
+
+            <input
+                id="signup-name"
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                autocomplete="off"
+                autocapitalize="words"
+                spellcheck="false"
+                required
+            >
+
+        </div>
+
+
+        <div class="input-box">
+
+            <label for="signup-email">
+                Email
+            </label>
+
+            <input
+                id="signup-email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+                required
+            >
+
+        </div>
+
+
+        <div class="input-box">
+
+            <label for="signup-password">
+                Password
+            </label>
+
+            <input
+                id="signup-password"
+                type="password"
+                name="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+            >
+
+        </div>
+
+
+        <button class="btn" type="submit">
+            Create Account
+        </button>
+
+    </form>
+
+
+    <div class="bottom">
+
+        Already have an account?
+
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

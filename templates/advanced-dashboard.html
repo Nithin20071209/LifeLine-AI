@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Advanced Dashboard | LifeLine AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #050b16;
+            --panel: rgba(11, 24, 42, 0.78);
+            --panel-soft: rgba(255, 255, 255, 0.035);
+            --border: rgba(105, 210, 255, 0.14);
+            --cyan: #62ddff;
+            --cyan-soft: rgba(98, 221, 255, 0.10);
+            --text: #f4f8ff;
+            --muted: #91a5b9;
+            --muted-2: #71869b;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(0, 173, 255, 0.16), transparent 28%),
+                radial-gradient(circle at 90% 15%, rgba(86, 91, 255, 0.12), transparent 25%),
+                radial-gradient(circle at 50% 100%, rgba(0, 205, 255, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            opacity: 0.18;
+            z-index: -1;
+        }
+
+        body::before {
+            top: 120px;
+            left: -120px;
+            background: #009dff;
+        }
+
+        body::after {
+            right: -120px;
+            bottom: 80px;
+            background: #5b5cff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(4, 10, 20, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(100, 210, 255, 0.10);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: auto;
+            padding: 14px 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--cyan);
+            white-space: nowrap;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding: 9px 12px;
+            border-radius: 10px;
+            color: #aebed0;
+            font-size: 13px;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            width: 0;
+            height: 2px;
+            border-radius: 10px;
+            background: var(--cyan);
+            transform: translateX(-50%);
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e9fbff;
+            background: rgba(98, 221, 255, 0.06);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links .active::after {
+            width: 24px;
+        }
+
+        .nav-links .active {
+            color: var(--cyan);
+            background: rgba(98, 221, 255, 0.07);
+        }
+
+        .logout {
+            color: #ff9ba8 !important;
+        }
+
+        .logout:hover {
+            background: rgba(255, 90, 115, 0.08) !important;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1280px;
+            margin: auto;
+            padding: 48px 22px 80px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            position: relative;
+            padding: 34px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(20, 54, 82, 0.72),
+                    rgba(7, 18, 34, 0.82)
+                );
+            overflow: hidden;
+            animation: fadeUp 0.55s ease both;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            right: -70px;
+            top: -100px;
+            border-radius: 50%;
+            background: rgba(70, 214, 255, 0.10);
+            filter: blur(15px);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 12px;
+            border-radius: 30px;
+            background: rgba(98, 221, 255, 0.08);
+            border: 1px solid rgba(98, 221, 255, 0.17);
+            color: var(--cyan);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 55px);
+            line-height: 1.02;
+            letter-spacing: -1.5px;
+            margin-bottom: 13px;
+        }
+
+        .hero h1 span {
+            color: var(--cyan);
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 760px;
+            line-height: 1.75;
+            font-size: 14px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            position: relative;
+            padding: 21px;
+            min-height: 145px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
+            animation: fadeUp 0.6s ease both;
+            transition: 0.25s ease;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.05s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 0.10s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 0.15s;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 45px;
+            height: 3px;
+            background: var(--cyan);
+            border-radius: 10px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(98, 221, 255, 0.28);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.20);
+        }
+
+        .stat-label {
+            color: #8fa4b8;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 11px;
+        }
+
+        .stat-value {
+            font-size: 34px;
+            line-height: 1;
+            font-weight: 850;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .stat-small {
+            margin-top: 10px;
+            color: var(--cyan);
+            font-size: 11px;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        .section {
+            margin-top: 24px;
+            animation: fadeUp 0.65s ease both;
+        }
+
+        .section-title {
+            font-size: 20px;
+            letter-spacing: -0.3px;
+            margin-bottom: 13px;
+        }
+
+        .section-subtitle {
+            color: #8197ab;
+            font-size: 12px;
+            margin-top: -6px;
+            margin-bottom: 17px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        /* ================= INSIGHT ================= */
+
+        .insight {
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid var(--cyan);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(43, 178, 235, 0.13),
+                    rgba(8, 24, 42, 0.84)
+                );
+        }
+
+        .insight::after {
+            content: "✦";
+            position: absolute;
+            right: 24px;
+            top: 15px;
+            font-size: 45px;
+            color: rgba(98, 221, 255, 0.08);
+        }
+
+        .insight-title {
+            color: var(--cyan);
+            font-weight: 750;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .insight p {
+            color: #b6c6d6;
+            line-height: 1.7;
+            font-size: 13px;
+            max-width: 900px;
+        }
+
+        /* ================= TWO COLUMN ================= */
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 18px;
+        }
+
+        /* ================= WEEKLY ================= */
+
+        .weekly-chart {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px;
+            height: 235px;
+            padding-top: 15px;
+        }
+
+        .day-column {
+            height: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bar-area {
+            width: 100%;
+            height: 175px;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .bar {
+            width: min(42px, 68%);
+            min-height: 5px;
+            height: 0;
+            border-radius: 9px 9px 4px 4px;
+            background:
+                linear-gradient(
+                    to top,
+                    #126d98,
+                    #58dcff
+                );
+            box-shadow: 0 0 18px rgba(88, 220, 255, 0.12);
+            transition: height 0.75s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .bar-value {
+            font-size: 11px;
+            font-weight: 700;
+            color: #6edfff;
+        }
+
+        .day-label {
+            color: #8197aa;
+            font-size: 11px;
+        }
+
+        /* ================= CATEGORY ================= */
+
+        .category-item {
+            margin-bottom: 18px;
+        }
+
+        .category-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 7px;
+            font-size: 12px;
+        }
+
+        .category-name {
+            color: #d7e4ef;
+        }
+
+        .category-number {
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 8px;
+            background: #12273b;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background:
+                linear-gradient(
+                    90deg,
+                    #167aa5,
+                    #58dcff
+                );
+            transition: width 0.8s cubic-bezier(.2,.8,.2,1);
+        }
+
+        /* ================= ACTIVITY ================= */
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .activity-box {
+            padding: 18px;
+            border-radius: 15px;
+            background: var(--panel-soft);
+            border: 1px solid rgba(255, 255, 255, 0.055);
+            transition: 0.25s ease;
+        }
+
+        .activity-box:hover {
+            transform: translateY(-3px);
+            border-color: rgba(98, 221, 255, 0.17);
+        }
+
+        .activity-box strong {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .activity-box span {
+            color: #879caf;
+            font-size: 11px;
+        }
+
+        /* ================= ROUTINES ================= */
+
+        .routine-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .routine-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.055);
+            border-radius: 14px;
+            transition: 0.22s ease;
+        }
+
+        .routine-item:hover {
+            background: rgba(98, 221, 255, 0.035);
+            border-color: rgba(98, 221, 255, 0.14);
+            transform: translateX(3px);
+        }
+
+        .routine-title {
+            font-weight: 750;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .routine-meta {
+            color: #8197aa;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .routine-category {
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(83, 217, 255, 0.08);
+            border: 1px solid rgba(83, 217, 255, 0.10);
+            color: var(--cyan);
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 32px 15px;
+            color: #8298ac;
+            font-size: 13px;
+        }
+
+        .empty a {
+            color: var(--cyan) !important;
+            font-weight: 650;
+        }
+
+        /* ================= CARE AREAS ================= */
+
+        .care-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .care-card {
+            padding: 20px 13px;
+            text-align: center;
+            border-radius: 16px;
+            background: var(--panel-soft);
+            border: 1px solid rgba(255,255,255,0.055);
+            transition: 0.25s ease;
+        }
+
+        .care-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(83, 217, 255, 0.24);
+            background: rgba(83, 217, 255, 0.045);
+        }
+
+        .care-icon {
+            font-size: 29px;
+            margin-bottom: 9px;
+        }
+
+        .care-card h3 {
+            font-size: 13px;
+        }
+
+        .care-card p {
+            color: #7f96aa;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .quick-btn {
+            position: relative;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(83, 217, 255, 0.12);
+            background: rgba(83, 217, 255, 0.045);
+            color: #dff8ff;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 650;
+            transition: 0.25s ease;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(83, 217, 255, 0.10);
+            border-color: rgba(83, 217, 255, 0.25);
+        }
+
+        /* ================= EMERGENCY ================= */
+
+        .emergency {
+            margin-top: 24px;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 105, 125, 0.18);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(120, 25, 45, 0.14),
+                    rgba(35, 12, 24, 0.55)
+                );
+        }
+
+        .emergency h2 {
+            color: #ff9eaa;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .emergency p {
+            color: #b99fa6;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 800px;
+        }
+
+        .emergency-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .emergency-btn {
+            padding: 11px 15px;
+            border-radius: 10px;
+            background: rgba(255, 100, 125, 0.08);
+            border: 1px solid rgba(255, 100, 125, 0.17);
+            color: #ffb1bb;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .emergency-btn:hover {
+            background: rgba(255, 100, 125, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOCUS ================= */
+
+        a:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 3px;
+        }
+
+        /* ================= ANIMATIONS ================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1050px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .care-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .activity-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .nav-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 4px;
+            }
+
+            .nav-links a {
+                white-space: nowrap;
+            }
+
+            .container {
+                padding: 30px 14px 55px;
+            }
+
+            .hero {
+                padding: 25px 20px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 16px;
+                min-height: 125px;
+            }
+
+            .stat-value {
+                font-size: 26px;
+            }
+
+            .care-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .stat-value {
+                font-size: 23px;
+            }
+
+            .weekly-chart {
+                gap: 5px;
+            }
+
+            .bar {
+                width: 65%;
+            }
+
+            .routine-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .emergency-buttons {
+                flex-direction: column;
+            }
+
+            .emergency-btn {
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <div class="logo">
+            🩵 LifeLine AI
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('chat') }}">
+                AI Assistant
+            </a>
+
+            <a href="{{ url_for('age_mode') }}">
+                Personalization
+            </a>
+
+            <a href="{{ url_for('routines') }}">
+                Routines
+            </a>
+
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('advanced_dashboard') }}" class="active">
+                Advanced
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            📊 Advanced Analytics
+        </div>
+
+        <h1>
+            Your Care <span>Overview</span>
+        </h1>
+
+        <p>
+            Welcome back, {{ user.name }}.
+            Track your LifeLine activity, routines and AI interactions
+            from one place.
+        </p>
+
+    </section>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-label">
+                Saved Routines
+            </div>
+
+            <div class="stat-value">
+                {{ routine_count }}
+            </div>
+
+            <div class="stat-small">
+                Personal care plans
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-label">
+                AI Messages
+            </div>
+
+            <div class="stat-value">
+                {{ chat_count }}
+            </div>
+
+            <div class="stat-small">
+                Saved conversations
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-label">
+                Your Questions
+            </div>
+
+            <div class="stat-value">
+                {{ user_message_count }}
+            </div>
+
+            <div class="stat-small">
+                AI interactions
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-label">
+                AI Responses
+            </div>
+
+            <div class="stat-value">
+                {{ assistant_message_count }}
+            </div>
+
+            <div class="stat-small">
+                Assistant messages
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= INSIGHT ================= -->
+
+    <section class="section">
+
+        <div class="card insight">
+
+            <div class="insight-title">
+                💡 LifeLine Insight
+            </div>
+
+            <p>
+                {{ care_insight }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= WEEKLY + CATEGORY ================= -->
+
+    <section class="section">
+
+        <div class="two-column">
+
+            <!-- WEEKLY -->
+
+            <div class="card">
+
+                <h2 class="section-title">
+                    📈 Weekly Routine Activity
+                </h2>
+
+                <p class="section-subtitle">
+                    Your saved routines scheduled for this week.
+                </p>
+
+                <div class="weekly-chart">
+
+                    {% set max_weekly =
+                        weekly_counts.values() | list | max
+                    %}
+
+                    {% if max_weekly == 0 %}
+                        {% set max_weekly = 1 %}
+                    {% endif %}
+
+                    {% for day, count in weekly_counts.items() %}
+
+                        <div class="day-column">
+
+                            <div class="bar-value">
+                                {{ count }}
+                            </div>
+
+                            <div class="bar-area">
+
+                                <div
+                                    class="bar"
+                                    data-height="{{ (count / max_weekly * 100) | round(0) }}"
+                                ></div>
+
+                            </div>
+
+                            <div class="day-label">
+                                {{ day }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="card">
+
+                <h2 class="section-title">
+                    🏷️ Care Categories
+                </h2>
+
+                <p class="section-subtitle">
+                    Your routine distribution.
+                </p>
+
+                {% if category_counts %}
+
+                    {% set max_category =
+                        category_counts.values() | list | max
+                    %}
+
+                    {% for category, count in category_counts.items() %}
+
+                        {% set progress_width =
+                            0 if max_category == 0
+                            else ((count / max_category) * 100)
+                            | round(0, 'floor') | int
+                        %}
+
+                        <div class="category-item">
+
+                            <div class="category-head">
+
+                                <span class="category-name">
+                                    {{ category }}
+                                </span>
+
+                                <span class="category-number">
+                                    {{ count }}
+                                </span>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-fill"
+                                    data-progress="{{ progress_width }}"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+                        No routine categories yet.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= AI ACTIVITY ================= -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            🤖 AI Activity
+        </h2>
+
+        <div class="activity-grid">
+
+            <div class="activity-box">
+                <strong>
+                    {{ user_message_count }}
+                </strong>
+
+                <span>
+                    Questions asked
+                </span>
+            </div>
+
+
+            <div class="activity-box">
+                <strong>
+                    {{ assistant_message_count }}
+                </strong>
+
+                <span>
+                    AI responses
+                </span>
+            </div>
+
+
+            <div class="activity-box">
+                <strong>
+                    {{ chat_count }}
+                </strong>
+
+                <span>
+                    Total messages
+                </span>
+            </div>
+
+
+            <div class="activity-box">
+                <strong>
+                    {{ routine_count }}
+                </strong>
+
+                <span>
+                    Saved routines
+                </span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RECENT ROUTINES ================= -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            ⏰ Recent Routines
+        </h2>
+
+        <div class="card">
+
+            {% if recent_routines %}
+
+                <div class="routine-list">
+
+                    {% for routine in recent_routines %}
+
+                        <div class="routine-item">
+
+                            <div>
+
+                                <div class="routine-title">
+                                    {{ routine.title }}
+                                </div>
+
+                                <div class="routine-meta">
+                                    📅 {{ routine.routine_date }}
+                                    &nbsp; • &nbsp;
+                                    ⏰ {{ routine.routine_time }}
+                                    &nbsp; • &nbsp;
+                                    🔁 {{ routine.repeat }}
+                                </div>
+
+                            </div>
+
+                            <div class="routine-category">
+                                {{ routine.category }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    No routines created yet.
+
+                    <br><br>
+
+                    <a href="{{ url_for('routines') }}">
+                        Create your first routine →
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CARE AREAS ================= -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            🌱 LifeLine Care Areas
+        </h2>
+
+        <div class="care-grid">
+
+            <div class="care-card">
+                <div class="care-icon">🧑</div>
+                <h3>Human</h3>
+                <p>Basic human care</p>
+            </div>
+
+            <div class="care-card">
+                <div class="care-icon">🐶</div>
+                <h3>Animal</h3>
+                <p>Pet care guidance</p>
+            </div>
+
+            <div class="care-card">
+                <div class="care-icon">🐦</div>
+                <h3>Bird</h3>
+                <p>Bird care guidance</p>
+            </div>
+
+            <div class="care-card">
+                <div class="care-icon">🌱</div>
+                <h3>Plant</h3>
+                <p>Plant care guidance</p>
+            </div>
+
+            <div class="care-card">
+                <div class="care-icon">🌳</div>
+                <h3>Tree</h3>
+                <p>Tree care guidance</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            ⚡ Quick Actions
+        </h2>
+
+        <div class="quick-grid">
+
+            <a
+                href="{{ url_for('chat') }}"
+                class="quick-btn"
+            >
+                🤖 Ask AI
+            </a>
+
+            <a
+                href="{{ url_for('routines') }}"
+                class="quick-btn"
+            >
+                ⏰ Manage Routines
+            </a>
+
+            <a
+                href="{{ url_for('history') }}"
+                class="quick-btn"
+            >
+                💬 View History
+            </a>
+
+            <a
+                href="{{ url_for('age_mode') }}"
+                class="quick-btn"
+            >
+                🎯 Personalize Care
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EMERGENCY ================= -->
+
+    <section class="emergency">
+
+        <h2>
+            🚨 Emergency Quick Center
+        </h2>
+
+        <p>
+            For serious or life-threatening situations,
+            contact emergency services or a qualified professional
+            immediately.
+        </p>
+
+        <div class="emergency-buttons">
+
+            <a
+                href="tel:108"
+                class="emergency-btn"
+            >
+                📞 Call 108
+            </a>
+
+            <a
+                href="tel:112"
+                class="emergency-btn"
+            >
+                📞 Call 112
+            </a>
+
+            <a
+                href="{{ url_for('hospitals') }}"
+                class="emergency-btn"
+            >
+                🏥 Find Hospitals
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        /* Animate weekly bars */
+        document.querySelectorAll(".bar").forEach(function (bar) {
+
+            const value = Number(bar.dataset.height || 0);
+
+            const safeValue = Math.max(
+                0,
+                Math.min(100, value)
+            );
+
+            requestAnimationFrame(function () {
+                bar.style.height = safeValue + "%";
+            });
+
+        });
+
+
+        /* Animate category progress bars */
+        document.querySelectorAll(".progress-fill").forEach(function (fill) {
+
+            const value = Number(fill.dataset.progress || 0);
+
+            const safeValue = Math.max(
+                0,
+                Math.min(100, value)
+            );
+
+            requestAnimationFrame(function () {
+                fill.style.width = safeValue + "%";
+            });
+
+        });
+
+    });
+</script>
+
+</body>
+</html>
